@@ -10,4 +10,11 @@ router.post('/', function(req, res, next) {
   loginController.validateLogin(req, res, next);
 });
 
+router.all("/cms", (req, res, next) => {
+  loginController.verifyCookie(req, res, next);
+});
+router.all("/cms/*", (req, res, next) => {
+  loginController.verifyCookie(req, res, next);
+});
+
 module.exports = router;

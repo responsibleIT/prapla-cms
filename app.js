@@ -7,6 +7,7 @@ const liveReload = require("livereload");
 const connectLiveReload = require("connect-livereload");
 const compression = require('compression');
 
+require('dotenv').config()
 
 const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
@@ -31,8 +32,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(publicDir));
 

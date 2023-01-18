@@ -1,7 +1,7 @@
 <%- include ('../header.ejs') %>
 <div id="login-container">
     <h1><%= title %></h1>
-    <form method="post">
+    <form id="login-form" method="post">
         <label for="email"><b>Email</b></label>
         <input type="text" placeholder="Enter Email" name="email" required>
 
@@ -19,7 +19,7 @@
             justify-content: center;
         }
 
-        form {
+        #login-form {
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -28,8 +28,79 @@
     </style>
 
     <script>
-        console.log("Hello World");
+        const {Client, Account, ID} = Appwrite;
+        const client = new Client()
+            .setEndpoint("https://aw.responsible-it.nl/v1")
+            .setProject("63a32dec14be845ec0f9")
 
+        const loginForm = document.getElementById("login-form");
+        loginForm.addEventListener("submit", handleSubmit);
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const props = Object.fromEntries(formData);
+
+            const account = new Account(client);
+            const login = new Promise((resolve, reject) => {
+                account.createEmailSession(
+                    props.email,
+                    props.psw
+                ).then(function (response) {
+                    resolve(response);
+                }, function (error) {
+                    reject(error);
+                });
+            });
+
+            login.then((res) => {
+                if (res) {
+                    fetch(window.location.href, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        credentials: "same-origin",
+                        body: JSON.stringify({
+                            "session_id": res["$id"],
+                            "user_id": res["userId"]
+                        })
+                    }).then(function (response) {
+                        if (response.redirected) {
+                            location.href = response.url
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+
+
+            // login.then(function (res) {
+            //     console.log(res);
+            //     if (res["$id"]) {
+            //         fetch(window.location.href, {
+            //             method: "POST",
+            //             headers: {
+            //                 "Content-Type": "application/json",
+            //             },
+            //             credentials: "include",
+            //             body: JSON.stringify({
+            //                 "session_id": res["$id"],
+            //                 "user_id": res["userId"]
+            //             })
+            //         }).then(function (response) {
+            //             if (response.redirected) {
+            //                 location.href = response.url
+            //             }
+            //         });
+            //     }
+            // }, function (error) {
+            //     console.log(error);
+            // });
+        }
     </script>
 </div>
 
