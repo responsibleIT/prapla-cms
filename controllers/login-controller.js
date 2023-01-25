@@ -1,4 +1,4 @@
-const appwrite = require("../data/appwrite");
+const appwrite = require("../service/appwrite");
 
 exports.getLoginView = (req, res, next) => {
     res.render('login/index', {title: 'Prapla'});
