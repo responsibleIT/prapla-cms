@@ -47,6 +47,7 @@
                     props.email,
                     props.psw
                 ).then(function (response) {
+                    console.log(response);
                     resolve(response);
                 }, function (error) {
                     reject(error);
@@ -77,29 +78,6 @@
                 console.log(error);
             });
 
-
-            // login.then(function (res) {
-            //     console.log(res);
-            //     if (res["$id"]) {
-            //         fetch(window.location.href, {
-            //             method: "POST",
-            //             headers: {
-            //                 "Content-Type": "application/json",
-            //             },
-            //             credentials: "include",
-            //             body: JSON.stringify({
-            //                 "session_id": res["$id"],
-            //                 "user_id": res["userId"]
-            //             })
-            //         }).then(function (response) {
-            //             if (response.redirected) {
-            //                 location.href = response.url
-            //             }
-            //         });
-            //     }
-            // }, function (error) {
-            //     console.log(error);
-            // });
         }
     </script>
 </div>

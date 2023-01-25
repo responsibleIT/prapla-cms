@@ -1,6 +1,6 @@
-const appwrite = require("../../data/appwrite");
+const appwrite = require("../data/appwrite");
 
-exports.getLogin = (req, res, next) => {
+exports.getLoginView = (req, res, next) => {
     res.render('login/index', {title: 'Prapla'});
 }
 

@@ -1,0 +1,68 @@
+<%- include ('../../../header.ejs') %>
+<div id="container">
+    <%- include ('../../nav.ejs') %>
+    <div id="content-container">
+        <h1><%= title %></h1>
+        <form>
+            <div id="image-upload">
+                <label for="image">Choose an image:</label>
+                <img id="upload-preview" width="30%"/>
+                <input required type="file" type="image" id="image" name="image"
+                       oninput="document.getElementById('upload-preview').src = window.URL.createObjectURL(this.files[0])">
+            </div>
+            <div>
+                <label for="word">Word:</label>
+                <input required type="text" id="word" name="word"></textarea>
+            </div>
+            <div>
+                <input type="submit" value="Upload">
+            </div>
+        </form>
+
+
+        <style>
+            #container {
+                display: flex;
+                flex-direction: row;
+                height: 100%;
+            }
+
+            #content-container {
+                padding: 16px 16px 16px 32px;
+            }
+
+            #image-upload {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #upload-preview {
+                margin: 8px;
+                border: black solid 1px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 0.5rem;
+            }
+
+            #image {
+                margin-bottom: 1rem;
+            }
+
+            #word {
+                margin-bottom: 1rem;
+            }
+
+        </style>
+
+        <script>
+            const {Client, Account, ID} = Appwrite;
+            const client = new Client()
+                .setEndpoint("https://aw.responsible-it.nl/v1")
+                .setProject("63a32dec14be845ec0f9")
+
+        </script>
+    </div>
+</div>
+<%- include ('../../../footer.ejs') %>

@@ -1,0 +1,31 @@
+<%- include ('../../header.ejs') %>
+<div id="container">
+    <%- include ('../nav.ejs') %>
+    <div id="content-container">
+        <h1><%= title %></h1>
+        <p>Welkom</p>
+
+        <a href="/cms/words/upload">Upload Word</a>
+
+        <style>
+            #container {
+                display: flex;
+                flex-direction: row;
+                height: 100%;
+            }
+
+            #content-container {
+                padding: 16px 16px 16px 32px;
+            }
+        </style>
+
+        <script>
+            const {Client, Account, ID} = Appwrite;
+            const client = new Client()
+                .setEndpoint("https://aw.responsible-it.nl/v1")
+                .setProject("63a32dec14be845ec0f9")
+
+        </script>
+    </div>
+</div>
+<%- include ('../../footer.ejs') %>

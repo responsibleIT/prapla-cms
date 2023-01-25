@@ -12,6 +12,7 @@ require('dotenv').config()
 const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
 const cmsRouter = require('./routes/cms');
+const wordsRouter = require('./routes/words');
 
 const publicDir = path.join(__dirname, 'public');
 const liveReloadServer = liveReload.createServer();
@@ -40,6 +41,7 @@ app.use(express.static(publicDir));
 app.use('/', loginRouter);
 app.use('/users', usersRouter);
 app.use('/cms', cmsRouter);
+app.use('/cms/words', wordsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
