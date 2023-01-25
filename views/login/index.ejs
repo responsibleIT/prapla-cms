@@ -47,7 +47,6 @@
                     props.email,
                     props.psw
                 ).then(function (response) {
-                    console.log(response);
                     resolve(response);
                 }, function (error) {
                     reject(error);
@@ -70,12 +69,10 @@
                         if (response.redirected) {
                             location.href = response.url
                         }
-                    }).catch(function (error) {
-                        console.log(error);
                     });
                 }
             }).catch((error) => {
-                console.log(error);
+                //TODO error handling login fail
             });
 
         }

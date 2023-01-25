@@ -3,9 +3,18 @@
     <%- include ('../nav.ejs') %>
     <div id="content-container">
         <h1><%= title %></h1>
-        <p>Welkom</p>
-
-        <a href="/cms/words/upload">Upload Word</a>
+        <a id="upload-word-link" href="/cms/words/upload">Upload Word</a>
+        <% if(typeof (words) != "undefined") { %>
+            <ul>
+                <% words.forEach(word => { %>
+                    <li>
+                        <a class="square-link" href="words/<%= word.id %>">
+                            <%= word.word %>
+                        </a>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
 
         <style>
             #container {
@@ -16,6 +25,16 @@
 
             #content-container {
                 padding: 16px 16px 16px 32px;
+            }
+
+            #upload-word-link {
+                display: block;
+                background-color: #4CAF50;
+                color: white;
+                text-align: center;
+                padding: 32px;
+                text-decoration: none;
+                border-radius: 12px;
             }
         </style>
 

@@ -3,20 +3,35 @@
     <%- include ('../../nav.ejs') %>
     <div id="content-container">
         <h1><%= title %></h1>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data"
+              onsubmit="return confirm('Are you sure you want to submit?');">
             <div id="image-upload">
-                <label for="image">Choose an image:</label>
-                <img id="upload-preview" width="30%"/>
-                <input required type="file" type="image" id="image" name="image"
+                <% if (editable === true) { %>
+                    <img src=<%= imageUrl %> id="upload-preview" width="50%"/>
+                <% }else { %>
+                    <img id="upload-preview" width="50%"/>
+                <% } %>
+
+                <input style="display:none;" type="file" type="image" id="image" name="image"
+                       accept="image/jpeg, image/jpg, image/png, image/svg, image/webp"
                        oninput="document.getElementById('upload-preview').src = window.URL.createObjectURL(this.files[0])">
+                <label id="image-upload-label" for="image">Choose an image</label>
             </div>
             <div>
                 <label for="word">Word:</label>
-                <input required type="text" id="word" name="word"></textarea>
+                <% if (editable === true) { %>
+                    <input required type="text" id="word" name="word" value=<%= word %>></textarea>
+                <% }else { %>
+                    <input required type="text" id="word" name="word"></textarea>
+                <% } %>
             </div>
             <div>
                 <input type="submit" value="Upload">
             </div>
+
+            <% if (editable === true) { %>
+                <input id="delete" type="submit" name="delete" value="delete">
+            <% } %>
         </form>
 
 
@@ -52,6 +67,20 @@
 
             #word {
                 margin-bottom: 1rem;
+            }
+
+            #delete {
+                margin-top: 1rem;
+                background-color: red;
+                padding: 16px;
+            }
+
+            #image-upload-label {
+                cursor: pointer;
+                padding: 16px;
+                background-color: #4CAF50;
+                border-radius: 16px;
+                width: 50%;
             }
 
         </style>
