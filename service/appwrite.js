@@ -118,20 +118,20 @@ exports.updateWord = (word, image) => {
     });
 }
 
-// exports.deleteWord = (word_id) => {
-//     return new Promise((resolve, reject) => {
-//         storage.deleteFile(storage_bucket_id, word_id)
-//             .then((response) => {
-//                 database.deleteDocument(database_id, word_collection_id, word_id)
-//                     .then((response) => {
-//                         resolve(response);
-//                     })
-//                     .catch((error) => {
-//                         reject(error);
-//                     });
-//             })
-//             .catch((error) => {
-//                 reject(error);
-//             });
-//     });
-// }
+exports.deleteWord = (word_id) => {
+    return new Promise((resolve, reject) => {
+        storage.deleteFile(storage_bucket_id, word_id)
+            .then((response) => {
+                database.deleteDocument(database_id, word_collection_id, word_id)
+                    .then((response) => {
+                        resolve(response);
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}

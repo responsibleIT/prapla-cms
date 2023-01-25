@@ -15,6 +15,7 @@ router.post('/upload', upload.single('image'), function (req, res, next) {
 });
 
 router.get('/:wordId', function (req, res, next) {
+    //TODO fix favicon
     wordsController.getDetailUpdateView(req, res, next)
 });
 
