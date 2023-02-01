@@ -35,6 +35,10 @@ exports.isValidSession = (user_id, session_id) => {
                     }
                 });
                 reject(false);
+            })
+            .catch((error) => {
+                console.log("SESSION error:", error)
+                reject(false);
             });
     })
 }
