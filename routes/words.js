@@ -3,7 +3,6 @@ const multer = require("multer");
 const appwrite = require("../service/appwrite");
 const router = express.Router();
 const upload = multer()
-
 const wordsController = require("../controllers/word-controller");
 
 router.get('/upload', function (req, res, next) {
@@ -15,7 +14,6 @@ router.post('/upload', upload.single('image'), function (req, res, next) {
 });
 
 router.get('/:wordId', function (req, res, next) {
-    //TODO fix favicon
     wordsController.getDetailUpdateView(req, res, next)
 });
 
