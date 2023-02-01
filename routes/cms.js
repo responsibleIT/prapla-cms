@@ -10,4 +10,9 @@ router.get('/words', function (req, res, next) {
     cmsController.getWordsView(req, res, next);
 });
 
+router.get('/lists', function (req, res, next) {
+    cmsController.getListsView(req, res, next);
+});
+
+
 module.exports = router;

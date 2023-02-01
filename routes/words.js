@@ -1,6 +1,5 @@
 const express = require('express');
 const multer = require("multer");
-const appwrite = require("../service/appwrite");
 const router = express.Router();
 const upload = multer()
 const wordsController = require("../controllers/word-controller");

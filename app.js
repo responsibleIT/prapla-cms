@@ -13,6 +13,7 @@ const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
 const cmsRouter = require('./routes/cms');
 const wordsRouter = require('./routes/words');
+const listsRouter = require('./routes/lists');
 
 const publicDir = path.join(__dirname, 'public');
 const liveReloadServer = liveReload.createServer();
@@ -42,6 +43,7 @@ app.use('/', loginRouter);
 app.use('/users', usersRouter);
 app.use('/cms', cmsRouter);
 app.use('/cms/words', wordsRouter);
+app.use('/cms/lists', listsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

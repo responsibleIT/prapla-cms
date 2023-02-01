@@ -15,6 +15,18 @@ exports.getWord = (word_id) => {
     });
 }
 
+exports.getWords = () => {
+    return new Promise((resolve, reject) => {
+        database.listDocuments(database_id, word_collection_id)
+            .then((response) => {
+                resolve(response.documents);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
 exports.uploadWord = (word, image) => {
     const new_id = uuid.v4();
     if (image) {

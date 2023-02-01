@@ -2,15 +2,15 @@
 <div id="container">
     <%- include ('../nav.ejs') %>
     <div id="content-row">
-        <div id="words-container">
+        <div id="list-container">
             <h1><%= title %></h1>
-            <a id="upload-word-link" href="/cms/words/upload">Create a new list</a>
-            <% if(typeof (words) != "undefined") { %>
+            <a id="upload-word-link" href="/cms/lists/upload">Create a new Word</a>
+            <% if(typeof (lists) != "undefined") { %>
                 <ul>
-                    <% words.forEach(word => { %>
+                    <% lists.forEach(list => { %>
                         <li>
-                            <a class="square-link" href="words/<%= word.id %>">
-                                <%= word.word %>
+                            <a class="square-link" href="lists/<%= list.id %>">
+                                <%= list.list %>
                             </a>
                         </li>
                     <% }); %>

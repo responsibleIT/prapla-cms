@@ -23,7 +23,7 @@
                 <input required type="text" id="word" name="word" value=<%= editable ? word : null %>></textarea>
             </div>
             <div>
-                <input type="submit" value="Upload">
+                <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
             </div>
 
             <% if (editable === true) { %>
