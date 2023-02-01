@@ -10,7 +10,7 @@
                     <img src=<%= imageUrl ? imageUrl + "&" + Date.now() : "/images/no-image-placeholder.webp" %> id="upload-preview"
                          width="50%"/>
                 <% }else { %>
-                    <img id="upload-preview" width="50%"/>
+                    <img src="/images/no-image-placeholder.webp" id="upload-preview" width="50%"/>
                 <% } %>
 
                 <input style="display:none;" type="file" type="image" id="image" name="image"
@@ -22,6 +22,36 @@
                 <label for="word">Word:</label>
                 <input required type="text" id="word" name="word" value=<%= editable ? word : null %>></textarea>
             </div>
+
+            <fieldset>
+                <legend>Lijsten</legend>
+                <% if (allWordLists) { %>
+                    <% allWordLists.forEach(list => { %>
+                        <div>
+                            <% if(typeof (subscribedLists) != "undefined") { %>
+                                <% if (subscribedLists.some(e => e.id === list.id)) { %>
+                                    <input data-id=<%= list.id %> type="checkbox"
+                                           id=<%= list.category %> name="wordlist"
+                                           value=<%= list.id %> checked/>
+                                <% } else { %>
+                                    <input data-id=<%= list.id %> type="checkbox"
+                                           id=<%= list.category %> name="wordlist"
+                                           value=<%= list.id %>/>
+                                <% } %>
+                            <% } else { %>
+                                <input data-id=<%= list.id %> type="checkbox" id=<%= list.category %> name="wordlist"
+                                       value=<%= list.id %>/>
+                            <% } %>
+                            <label for=<%= list.category %>><%= list.category %></label>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </fieldset>
+
+            <% if (typeof (imageUrl) != "undefined") { %>
+            <input type="hidden" name="has-image" value="true">
+            <% } %>
+
             <div>
                 <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
             </div>
@@ -30,7 +60,6 @@
                 <input id="delete" type="submit" name="delete" value="delete">
             <% } %>
         </form>
-
 
         <style>
             #container {

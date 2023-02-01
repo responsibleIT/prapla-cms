@@ -9,7 +9,7 @@ router.get('/upload', function (req, res, next) {
 });
 
 router.post('/upload', upload.single('image'), function (req, res, next) {
-    listsController.handleUpload(req, res, next);
+    listsController.handleCreate(req, res, next);
 });
 
 router.get('/:listId', function (req, res, next) {

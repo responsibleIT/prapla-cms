@@ -9,7 +9,7 @@ router.get('/upload', function (req, res, next) {
 });
 
 router.post('/upload', upload.single('image'), function (req, res, next) {
-    wordsController.handleUpload(req, res, next);
+    wordsController.handleCreate(req, res, next);
 });
 
 router.get('/:wordId', function (req, res, next) {

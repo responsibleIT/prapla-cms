@@ -27,22 +27,23 @@ exports.getWords = () => {
     });
 }
 
-exports.uploadWord = (word, image) => {
+exports.createWord = (word, image, wordList) => {
     const new_id = uuid.v4();
     if (image) {
-        return createWordWithImage(word, image, new_id)
+        return createWordWithImage(word, image, new_id, wordList)
     } else {
-        return createWordWithoutImage(word, new_id)
+        return createWordWithoutImage(word, new_id, wordList)
     }
 }
 
-function createWordWithoutImage(word, id) {
+function createWordWithoutImage(word, id, wordList) {
     return new Promise((resolve, reject) => {
         database.createDocument(database_id,
             word_collection_id,
             id,
             {
-                word: word
+                word: word,
+                wordlist: wordList
             })
             .then((response) => {
                 resolve(response);
@@ -53,7 +54,7 @@ function createWordWithoutImage(word, id) {
     });
 }
 
-function createWordWithImage(word, image, id) {
+function createWordWithImage(word, image, id, wordList) {
     return new Promise((resolve, reject) => {
         storage.createFile(storage_bucket_id,
             id,
@@ -65,6 +66,7 @@ function createWordWithImage(word, image, id) {
                     id,
                     {
                         word: word,
+                        wordlist: wordList,
                         image: image_url_string
                     })
                     .then((response) => {
@@ -83,37 +85,55 @@ function createWordWithImage(word, image, id) {
     });
 }
 
-exports.updateWord = (id, word, image) => {
-    if (image) {
-        return updateWordWithImage(id, word, image)
+exports.updateWord = (id, word, image, wordList, has_image_already) => {
+    if (image || has_image_already) {
+        return updateWordWithImage(id, word, image, wordList, has_image_already)
     } else {
-        return updateWordWithoutImage(id, word)
+        return updateWordWithoutImage(id, word, wordList)
     }
 }
 
-function updateWordWithImage(id, word, image) {
-    return new Promise((resolve, reject) => {
-        deleteWord(id)
-            .then((response) => {
-                createWordWithImage(word, image, id)
-                    .then((response) => {
+function updateWordWithImage(id, word, image, wordList, has_image_already) {
+    if (has_image_already) {
+        return new Promise((resolve, reject) => {
+            database.deleteDocument(database_id, word_collection_id, id)
+                .then((response) => {
+                    const image_url_string = `${process.env.AW_ENDPOINT}/storage/buckets/${storage_bucket_id}/files/${id}/view?project=${process.env.AW_PROJECT_ID}`
+                    database.createDocument(database_id, word_collection_id, id, {
+                        word: word,
+                        wordlist: wordList,
+                        image: image_url_string
+                    }).then((response) => {
                         resolve(response);
-                    })
-                    .catch((error) => {
+                    }).catch((error) => {
                         reject(error);
                     });
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+                });
+        });
+    } else {
+        return new Promise((resolve, reject) => {
+            deleteWord(id)
+                .then((response) => {
+                    createWordWithImage(word, image, id, wordList)
+                        .then((response) => {
+                            resolve(response);
+                        })
+                        .catch((error) => {
+                            reject(error);
+                        });
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+    }
 }
 
-function updateWordWithoutImage(word_id, word) {
+function updateWordWithoutImage(word_id, word, wordList) {
     return new Promise((resolve, reject) => {
         database.deleteDocument(database_id, word_collection_id, word_id)
             .then((response) => {
-                createWordWithoutImage(word, word_id)
+                createWordWithoutImage(word, word_id, wordList)
                     .then((response) => {
                         resolve(response);
                     })

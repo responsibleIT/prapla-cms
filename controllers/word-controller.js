@@ -1,13 +1,33 @@
 const wordRepository = require('../data/word-repository');
+const listRepository = require('../data/list-repository');
 
 exports.getDetailCreateView = (req, res, next) => {
-    res.render('cms/words/detail/index', {title: 'Create New Word', editable: false});
+    listRepository.getLists()
+        .then((wordlistsResponse) => {
+            let allWordLists = wordlistsResponse.map(object => {
+                return {category: object.category, id: object["$id"]}
+            });
+            res.render('cms/words/detail/index', {
+                title: 'Create New Word',
+                editable: false,
+                allWordLists: allWordLists
+            });
+        });
 }
 
-exports.handleUpload = (req, res, next) => {
+exports.handleCreate = (req, res, next) => {
     const word = req.body.word;
     const image = req.file;
-    wordRepository.uploadWord(word, image)
+    let wordList;
+    if (Array.isArray(req.body.wordlist)) {
+        wordList = req.body.wordlist.map(string => string.replace("/", ""));
+    } else if (req.body.wordlist) {
+        wordList = [req.body.wordlist.slice(0, -1)];
+    } else {
+        wordList = [];
+    }
+
+    wordRepository.createWord(word, image, wordList)
         .then((response) => {
             res.redirect('/cms/words');
         })
@@ -19,6 +39,19 @@ exports.handleUpload = (req, res, next) => {
 exports.handleUpdate = (req, res, next) => {
     const word = req.body.word;
     const image = req.file;
+    let has_image_already = Boolean(req.body["has-image"])
+    if (req.file) {
+        has_image_already = false;
+    }
+
+    let wordList;
+    if (Array.isArray(req.body.wordlist)) {
+        wordList = req.body.wordlist.map(string => string.replace("/", ""));
+    } else if (req.body.wordlist) {
+        wordList = [req.body.wordlist.slice(0, -1)];
+    } else {
+        wordList = [];
+    }
 
     if (req.body.delete) {
         wordRepository.deleteWord(req.params.wordId)
@@ -26,7 +59,7 @@ exports.handleUpdate = (req, res, next) => {
                 res.redirect('/cms/words');
             });
     } else {
-        wordRepository.updateWord(req.params.wordId, word, image)
+        wordRepository.updateWord(req.params.wordId, word, image, wordList, has_image_already)
             .then((response) => {
                 res.redirect('/cms/words');
             });
@@ -36,13 +69,24 @@ exports.handleUpdate = (req, res, next) => {
 exports.getDetailUpdateView = (req, res, next) => {
     wordRepository.getWord(req.params.wordId)
         .then((response) => {
-            res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-            res.render('cms/words/detail/index', {
-                title: 'Update Word: ' + response.word,
-                editable: true,
-                word: response.word,
-                imageUrl: response.image,
-                wordlists: response.wordlists
-            });
+            listRepository.getLists()
+                .then((wordlistsResponse) => {
+                    let allWordLists = wordlistsResponse.map(object => {
+                        return {category: object.category, id: object["$id"]}
+                    });
+
+                    let subscribedLists = response.wordlist.map(object => {
+                        return {id: object}
+                    });
+
+                    res.render('cms/words/detail/index', {
+                        title: 'Update Word: ' + response.word,
+                        editable: true,
+                        word: response.word,
+                        imageUrl: response.image,
+                        allWordLists: allWordLists,
+                        subscribedLists: subscribedLists
+                    });
+                });
         });
 }

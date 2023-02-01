@@ -25,7 +25,7 @@ exports.getLists = () => {
     });
 }
 
-exports.uploadList = (category) => {
+exports.createList = (category) => {
     const id = uuid.v4();
     return createList(category, id);
 }

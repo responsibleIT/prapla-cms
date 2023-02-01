@@ -5,11 +5,11 @@ exports.getDetailCreateView = (req, res, next) => {
     res.render('cms/lists/detail/index', {title: 'Create New List', editable: false});
 }
 
-exports.handleUpload = (req, res, next) => {
+exports.handleCreate = (req, res, next) => {
     const category = req.body.category;
 
 
-    listRepository.uploadList(category)
+    listRepository.createList(category)
         .then((response) => {
             res.redirect('/cms/lists');
         })
