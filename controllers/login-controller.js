@@ -15,6 +15,7 @@ exports.validateLogin = (req, res, next) => {
                 res.redirect('/cms');
             })
             .catch((error) => {
+                console.log(error);
                 res.redirect('/');
             });
     } else {
@@ -31,6 +32,7 @@ exports.verifyCookie = (req, res, next) => {
                 next();
             })
             .catch((error) => {
+                console.log(error);
                 res.redirect('/');
             });
     } else {
