@@ -7,7 +7,8 @@
               onsubmit="return confirm('Are you sure you want to submit?');">
             <div id="image-upload">
                 <% if (editable === true) { %>
-                    <img src=<%= imageUrl %> id="upload-preview" width="50%"/>
+                    <img src=<%= imageUrl ? imageUrl + "&" + Date.now() : "/images/no-image-placeholder.webp" %> id="upload-preview"
+                         width="50%"/>
                 <% }else { %>
                     <img id="upload-preview" width="50%"/>
                 <% } %>
@@ -19,11 +20,7 @@
             </div>
             <div>
                 <label for="word">Word:</label>
-                <% if (editable === true) { %>
-                    <input required type="text" id="word" name="word" value=<%= word %>></textarea>
-                <% }else { %>
-                    <input required type="text" id="word" name="word"></textarea>
-                <% } %>
+                <input required type="text" id="word" name="word" value=<%= editable ? word : null %>></textarea>
             </div>
             <div>
                 <input type="submit" value="Upload">
