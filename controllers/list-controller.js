@@ -8,7 +8,6 @@ exports.getDetailCreateView = (req, res, next) => {
 exports.handleCreate = (req, res, next) => {
     const category = req.body.category;
 
-
     listRepository.createList(category)
         .then((response) => {
             res.redirect('/cms/lists');
@@ -37,11 +36,18 @@ exports.handleUpdate = (req, res, next) => {
 exports.getDetailUpdateView = (req, res, next) => {
     listRepository.getList(req.params.listId)
         .then((response) => {
-            res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-            res.render('cms/lists/detail/index', {
-                title: 'Update Word: ' + response.category,
-                editable: true,
-                category: response.category,
-            });
+            wordRepository.getWords()
+                .then((wordResponse) => {
+                    let allWords = wordResponse.map(object => {
+                        return {word: object.word, id: object["$id"], subscribedWordList: object.wordlist}
+                    });
+                    res.render('cms/lists/detail/index', {
+                        title: 'Update List: ' + response.category,
+                        editable: true,
+                        category: response.category,
+                        listId: req.params.listId,
+                        allWords: allWords
+                    });
+                });
         });
 }

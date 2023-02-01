@@ -10,8 +10,34 @@
                 <input required type="text" id="category" name="category"
                        value=<%= editable ? category : null %>></textarea>
             </div>
+
+            <fieldset>
+                <legend>Woorden</legend>
+                <% if (allWords) { %>
+                    <% allWords.forEach(word => { %>
+                        <div>
+                            <% if(word.subscribedWordList) { %>
+                                <% if (word.subscribedWordList.some(e => e === listId)) { %>
+                                    <input data-id=<%= word.id %> type="checkbox"
+                                           id=<%= word.word %> name="words"
+                                           value=<%= word.id %> checked/>
+                                <% } else { %>
+                                    <input data-id=<%= word.id %> type="checkbox"
+                                           id=<%= word.word %> name="words"
+                                           value=<%= word.id %>/>
+                                <% } %>
+                            <% } else { %>
+                                <input data-id=<%= word.id %> type="checkbox" id=<%= word.word %> name="words"
+                                       value=<%= word.id %>/>
+                            <% } %>
+                            <label for=<%= word.word %>><%= word.word %></label>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </fieldset>
+
             <div>
-                <input type="submit" value="<%= editable ? "Update": "Upload" %>">
+                <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
             </div>
 
             <% if (editable === true) { %>
