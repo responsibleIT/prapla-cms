@@ -5,25 +5,18 @@
         <h1><%= title %></h1>
         <form method="post" enctype="multipart/form-data"
               onsubmit="return confirm('Are you sure you want to submit?');">
-            <div id="image-upload">
-                <% if (editable === true) { %>
-                    <img src=<%= imageUrl ? imageUrl + "&" + Date.now() : "/images/no-image-placeholder.webp" %> id="upload-preview"
-                         width="50%"/>
-                <% }else { %>
-                    <img src="/images/no-image-placeholder.webp" id="upload-preview" width="50%"/>
-                <% } %>
-
-                <input style="display:none;" type="file" type="image" id="image" name="image"
-                       accept="image/jpeg, image/jpg, image/png, image/svg, image/webp"
-                       oninput="document.getElementById('upload-preview').src = window.URL.createObjectURL(this.files[0])">
-                <label id="image-upload-label" for="image">Choose an image</label>
-            </div>
             <div>
-                <label for="word">Word:</label>
-                <input required type="text" id="word" name="word" value=<%= editable ? word : null %>></textarea>
+                <label for="name">Name:</label>
+                <input required type="text" id="name" name="name" value=<%= editable ? name : null %>></textarea>
             </div>
 
-            <% if (typeof(allWordLists) != "undefined") { %>
+            <div>
+                <label for="nickname">Nickname:</label>
+                <input required type="text" id="nickname" name="nickname"
+                       value=<%= editable ? name : null %>></textarea>
+            </div>
+
+            <% if (typeof (allWordLists) != "undefined") { %>
                 <fieldset>
                     <legend>Lijsten</legend>
                     <% allWordLists.forEach(list => { %>
@@ -49,7 +42,15 @@
             <% } %>
 
             <% if (typeof (imageUrl) != "undefined") { %>
-            <input type="hidden" name="has-image" value="true">
+                <input type="hidden" name="has-image" value="true">
+            <% } %>
+
+            <% if (editable) { %>
+                <div>
+                    <label for="spell">Magic spell:</label>
+                    <input required type="text" id="nickname" name="nickname"
+                           value=<%= editable ? name : null %>></textarea>
+                </div>
             <% } %>
 
             <div>
@@ -72,26 +73,17 @@
                 padding: 16px 16px 16px 32px;
             }
 
-            #image-upload {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #upload-preview {
-                margin: 8px;
-                border: black solid 1px;
-            }
-
             label {
                 display: block;
                 margin-bottom: 0.5rem;
             }
 
-            #image {
+
+            #name {
                 margin-bottom: 1rem;
             }
 
-            #word {
+            #nickname {
                 margin-bottom: 1rem;
             }
 
@@ -99,14 +91,6 @@
                 margin-top: 1rem;
                 background-color: red;
                 padding: 16px;
-            }
-
-            #image-upload-label {
-                cursor: pointer;
-                padding: 16px;
-                background-color: #4CAF50;
-                border-radius: 16px;
-                width: 50%;
             }
 
         </style>

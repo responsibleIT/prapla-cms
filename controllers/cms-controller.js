@@ -1,5 +1,6 @@
 const wordRepo = require('../data/word-repository');
 const listRepo = require('../data/list-repository');
+const studentRepo = require('../data/student-repository');
 
 exports.getDashboardView = (req, res, next) => {
     res.render('cms/dashboard/index', {title: 'Dashboard'});
@@ -34,5 +35,20 @@ exports.getListsView = (req, res, next) => {
         .catch((error) => {
             console.log(error);
             res.render('cms/lists/index', {title: 'Lists'});
+        });
+}
+
+exports.getStudentsView = (req, res, next) => {
+    studentRepo.getStudents()
+        .then((response) => {
+            let students = response.map(object => {
+                return {name: object.name, nickname: object.nickname, id: object["$id"]}
+            });
+
+            res.render('cms/students/index', {title: 'Students', students: students});
+        })
+        .catch((error) => {
+            console.log(error);
+            res.render('cms/students/index', {title: 'Students'});
         });
 }
