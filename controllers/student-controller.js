@@ -21,7 +21,8 @@ exports.getDetailUpdateView = (req, res, next) => {
             listRepository.getLists()
                 .then((wordlistsResponse) => {
                     let allWordLists = wordlistsResponse.map(object => {
-                        return {category: object.category, id: object["$id"]}
+                        //TODO: prechecked list optimization
+                        return {category: object.category, id: object["$id"], checked: (object["$id"] === response.wordlist) }
                     });
 
 
@@ -31,9 +32,26 @@ exports.getDetailUpdateView = (req, res, next) => {
                         name: response.name,
                         nickname: response.nickname,
                         spell: response.spell,
-                        wordlist: response.wordlist,
+                        subscribedList: response.wordlist,
                         allWordLists: allWordLists
                     });
                 });
+        });
+}
+
+exports.handleCreate = (req, res, next) => {
+    console.log(req.body);
+    const name = req.body.name;
+    const nickname = req.body.nickname;
+    const wordlist = req.body.wordlist.replace("/", "")
+
+    //TODO SPELL GENERATOR
+    const spell = "TODO SPELL GENERATOR"
+    studentRepository.createStudent(name, nickname, wordlist, spell)
+        .then((response) => {
+            res.redirect('/cms/students');
+        })
+        .catch((error) => {
+            res.redirect('/cms/students');
         });
 }

@@ -13,7 +13,7 @@
             <div>
                 <label for="nickname">Nickname:</label>
                 <input required type="text" id="nickname" name="nickname"
-                       value=<%= editable ? name : null %>></textarea>
+                       value=<%= editable ? nickname : null %>></textarea>
             </div>
 
             <% if (typeof (allWordLists) != "undefined") { %>
@@ -21,8 +21,8 @@
                     <legend>Lijsten</legend>
                     <% allWordLists.forEach(list => { %>
                         <div>
-                            <% if(typeof (subscribedLists) != "undefined") { %>
-                                <% if (subscribedLists.some(e => e.id === list.id)) { %>
+                            <% if(typeof (subscribedList) != "undefined") { %>
+                                <% if (subscribedList === list.id) { %>
                                     <input data-id=<%= list.id %> type="radio"
                                            id=<%= list.category %> name="wordlist"
                                            value=<%= list.id %> checked/>
