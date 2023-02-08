@@ -22,7 +22,11 @@ exports.getDetailUpdateView = (req, res, next) => {
                 .then((wordlistsResponse) => {
                     let allWordLists = wordlistsResponse.map(object => {
                         //TODO: prechecked list optimization
-                        return {category: object.category, id: object["$id"], checked: (object["$id"] === response.wordlist) }
+                        return {
+                            category: object.category,
+                            id: object["$id"],
+                            checked: (object["$id"] === response.wordlist)
+                        }
                     });
 
 
@@ -40,7 +44,6 @@ exports.getDetailUpdateView = (req, res, next) => {
 }
 
 exports.handleCreate = (req, res, next) => {
-    console.log(req.body);
     const name = req.body.name;
     const nickname = req.body.nickname;
     const wordlist = req.body.wordlist.replace("/", "")
@@ -54,4 +57,29 @@ exports.handleCreate = (req, res, next) => {
         .catch((error) => {
             res.redirect('/cms/students');
         });
+}
+
+exports.handleUpdate = (req, res, next) => {
+    const name = req.body.name;
+    const nickname = req.body.nickname;
+    const wordlist = req.body.wordlist.replace("/", "")
+    const spell = req.body.spell;
+
+    if (req.body.delete) {
+        studentRepository.deleteStudent(req.params.studentId)
+            .then((response) => {
+                res.redirect('/cms/students');
+            })
+            .catch((error) => {
+                res.redirect('/cms/students');
+            });
+    } else {
+        studentRepository.updateStudent(req.params.studentId, name, nickname, wordlist, spell)
+            .then((response) => {
+                res.redirect('/cms/students');
+            })
+            .catch((error) => {
+                res.redirect('/cms/students');
+            });
+    }
 }

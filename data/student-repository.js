@@ -50,3 +50,19 @@ exports.createStudent = (name, nickname, wordlist, spell) => {
             });
     });
 }
+
+exports.updateStudent = (student_id, name, nickname, wordlist, spell) => {
+
+}
+
+exports.deleteStudent = (student_id) => {
+    return new Promise((resolve, reject) => {
+        database.deleteDocument(database_id, student_collection_id, student_id)
+            .then((response) => {
+                resolve(response);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}

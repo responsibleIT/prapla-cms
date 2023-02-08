@@ -16,4 +16,8 @@ router.get('/:studentId', function (req, res, next) {
     studentController.getDetailUpdateView(req, res, next)
 });
 
+router.post('/:studentId', upload.single("student"), function (req, res, next) {
+    studentController.handleUpdate(req, res, next);
+});
+
 module.exports = router;
