@@ -16,7 +16,7 @@ exports.getDetailCreateView = (req, res, next) => {
 }
 
 exports.getDetailUpdateView = (req, res, next) => {
-    studentRepository.getStudents(req.params.studentId)
+    studentRepository.getStudent(req.params.studentId)
         .then((response) => {
             listRepository.getLists()
                 .then((wordlistsResponse) => {
@@ -24,17 +24,15 @@ exports.getDetailUpdateView = (req, res, next) => {
                         return {category: object.category, id: object["$id"]}
                     });
 
-                    let subscribedLists = response.wordlist.map(object => {
-                        return {id: object}
-                    });
 
-                    res.render('cms/words/detail/index', {
-                        title: 'Update Word: ' + response.word,
+                    res.render('cms/students/detail/index', {
+                        title: 'Update Word: ' + response.name,
                         editable: true,
-                        word: response.word,
-                        imageUrl: response.image,
-                        allWordLists: allWordLists,
-                        subscribedLists: subscribedLists
+                        name: response.name,
+                        nickname: response.nickname,
+                        spell: response.spell,
+                        wordlist: response.wordlist,
+                        allWordLists: allWordLists
                     });
                 });
         });

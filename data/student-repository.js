@@ -3,7 +3,7 @@ const uuid = require("uuid");
 
 exports.getStudent = (student_id) => {
     return new Promise((resolve, reject) => {
-        database.getDocument(database_id, student_collection_id, word_id)
+        database.getDocument(database_id, student_collection_id, student_id)
             .then((response) => {
                 resolve(response);
             })

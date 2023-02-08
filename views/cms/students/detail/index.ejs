@@ -48,8 +48,8 @@
             <% if (editable) { %>
                 <div>
                     <label for="spell">Magic spell:</label>
-                    <input required type="text" id="nickname" name="nickname"
-                           value=<%= editable ? name : null %>></textarea>
+                    <input type="text" id="spell" name="spell" disabled
+                           value="<%= editable ? spell: null %>"></textarea>
                 </div>
             <% } %>
 
@@ -84,6 +84,10 @@
             }
 
             #nickname {
+                margin-bottom: 1rem;
+            }
+
+            #spell {
                 margin-bottom: 1rem;
             }
 
