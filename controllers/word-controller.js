@@ -15,6 +15,31 @@ exports.getDetailCreateView = (req, res, next) => {
         });
 }
 
+exports.getDetailUpdateView = (req, res, next) => {
+    wordRepository.getWord(req.params.wordId)
+        .then((response) => {
+            listRepository.getLists()
+                .then((wordlistsResponse) => {
+                    let allWordLists = wordlistsResponse.map(object => {
+                        return {category: object.category, id: object["$id"]}
+                    });
+
+                    let subscribedLists = response.wordlist.map(object => {
+                        return {id: object}
+                    });
+
+                    res.render('cms/words/detail/index', {
+                        title: 'Update Word: ' + response.word,
+                        editable: true,
+                        word: response.word,
+                        imageUrl: response.image,
+                        allWordLists: allWordLists,
+                        subscribedLists: subscribedLists
+                    });
+                });
+        });
+}
+
 exports.handleCreate = (req, res, next) => {
     const word = req.body.word;
     const image = req.file;
@@ -64,29 +89,4 @@ exports.handleUpdate = (req, res, next) => {
                 res.redirect('/cms/words');
             });
     }
-}
-
-exports.getDetailUpdateView = (req, res, next) => {
-    wordRepository.getWord(req.params.wordId)
-        .then((response) => {
-            listRepository.getLists()
-                .then((wordlistsResponse) => {
-                    let allWordLists = wordlistsResponse.map(object => {
-                        return {category: object.category, id: object["$id"]}
-                    });
-
-                    let subscribedLists = response.wordlist.map(object => {
-                        return {id: object}
-                    });
-
-                    res.render('cms/words/detail/index', {
-                        title: 'Update Word: ' + response.word,
-                        editable: true,
-                        word: response.word,
-                        imageUrl: response.image,
-                        allWordLists: allWordLists,
-                        subscribedLists: subscribedLists
-                    });
-                });
-        });
 }

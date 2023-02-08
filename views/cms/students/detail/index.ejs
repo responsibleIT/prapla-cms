@@ -23,16 +23,16 @@
                         <div>
                             <% if(typeof (subscribedLists) != "undefined") { %>
                                 <% if (subscribedLists.some(e => e.id === list.id)) { %>
-                                    <input data-id=<%= list.id %> type="checkbox"
+                                    <input data-id=<%= list.id %> type="radio"
                                            id=<%= list.category %> name="wordlist"
                                            value=<%= list.id %> checked/>
                                 <% } else { %>
-                                    <input data-id=<%= list.id %> type="checkbox"
+                                    <input data-id=<%= list.id %> type="radio"
                                            id=<%= list.category %> name="wordlist"
                                            value=<%= list.id %>/>
                                 <% } %>
                             <% } else { %>
-                                <input data-id=<%= list.id %> type="checkbox" id=<%= list.category %> name="wordlist"
+                                <input data-id=<%= list.id %> type="radio" id=<%= list.category %> name="wordlist"
                                        value=<%= list.id %>/>
                             <% } %>
                             <label for=<%= list.category %>><%= list.category %></label>
