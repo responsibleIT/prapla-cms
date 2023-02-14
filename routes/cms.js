@@ -7,15 +7,15 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/words', async (req, res, next) => {
-    cmsController.getWordsView(req, res, next);
+    await cmsController.getWordsView(req, res, next);
 });
 
 router.get('/lists', async (req, res, next) =>{
-    cmsController.getListsView(req, res, next);
+    await cmsController.getListsView(req, res, next);
 });
 
 router.get('/students', async (req, res, next) => {
-    cmsController.getStudentsView(req, res, next);
+    await cmsController.getStudentsView(req, res, next);
 });
 
 
