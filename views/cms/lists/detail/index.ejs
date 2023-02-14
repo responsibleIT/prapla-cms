@@ -19,17 +19,17 @@
 <!--                            TODO: fix word checkbox two way state, disabled for now-->
                             <% if(word.subscribedWordList) { %>
                                 <% if (word.subscribedWordList.some(e => e === listId)) { %>
-                                    <input data-id=<%= word.id %> type="checkbox"
-                                           id=<%= word.word %> name="words"
-                                           value=<%= word.id %> checked disabled/>
+                                    <input data-id="<%= word.id %>" type="checkbox"
+                                           id="<%= word.word %>" name="words"
+                                           value="<%= word.id %>" checked disabled/>
                                 <% } else { %>
-                                    <input data-id=<%= word.id %> type="checkbox"
-                                           id=<%= word.word %> name="words"
-                                           value=<%= word.id %> disabled/>
+                                    <input data-id="<%= word.id %>" type="checkbox"
+                                           id="<%= word.word %>" name="words"
+                                           value="<%= word.id %>" disabled />
                                 <% } %>
                             <% } else { %>
-                                <input data-id=<%= word.id %> type="checkbox" id=<%= word.word %> name="words"
-                                       value=<%= word.id %> disabled/>
+                                <input data-id="<%= word.id %>" type="checkbox" id="<%= word.word %>" name="words"
+                                       value="<%= word.id %>" disabled />
                             <% } %>
                             <label for=<%= word.word %>><%= word.word %></label>
                         </div>
