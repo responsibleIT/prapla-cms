@@ -1,13 +1,10 @@
 const {
     database,
-    storage,
-    storage_bucket_id,
     database_id,
-    word_collection_id,
-    list_collection_id,
-    student_collection_id
+    student_collection_id, spell_collection_id
 } = require("../service/appwrite");
 const uuid = require("uuid");
+const spellRepo = require("./spell-repository");
 
 exports.getStudent = (student_id) => {
     return new Promise((resolve, reject) => {
@@ -36,21 +33,16 @@ exports.getStudents = () => {
     });
 }
 
-exports.createStudent = (name, nickname, wordlist, spell) => {
+exports.createStudent = async (name, nickname, wordlist) => {
     const new_id = uuid.v4();
-    return new Promise((resolve, reject) => {
-        database.createDocument(database_id, student_collection_id, new_id, {
+    return new Promise(async (resolve, reject) => {
+        await database.createDocument(database_id, student_collection_id, new_id, {
             name: name,
             nickname: nickname,
-            wordlist: wordlist,
-            spell: spell
-        })
-            .then((response) => {
-                resolve(response);
-            })
-            .catch((error) => {
-                reject(error);
-            });
+        });
+
+        await spellRepo.createSpell(new_id, wordlist);
+        resolve(true);
     });
 }
 

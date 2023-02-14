@@ -4,7 +4,6 @@ const studentRepo = require('../data/student-repository');
 const spellCreator = require('../service/spell-creator');
 
 exports.getDashboardView = async (req, res) => {
-    console.log(await spellCreator.generateUniqueSpell());
     res.render('cms/dashboard/index', {title: 'Dashboard'});
 }
 
