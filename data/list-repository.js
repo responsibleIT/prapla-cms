@@ -18,7 +18,7 @@ exports.getLists = () => {
         database.listDocuments(database_id, list_collection_id)
             .then((response) => {
                 let lists = response.documents.map(object => {
-                    return {list: object.category, id: object["$id"]}
+                    return {category: object.category, id: object["$id"]}
                 });
                 resolve(lists);
             })
