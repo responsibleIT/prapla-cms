@@ -10,6 +10,7 @@ const database_id = process.env.AW_DATABASE_ID
 const word_collection_id = process.env.AW_WORD_COLLECTION_ID
 const list_collection_id = process.env.AW_LIST_COLLECTION_ID
 const student_collection_id = process.env.AW_STUDENT_COLLECTION_ID
+const spell_collection_id = process.env.AW_SPELL_COLLECTION_ID
 const storage_bucket_id = process.env.AW_STORAGE_BUCKET_ID
 
 client.setEndpoint(process.env.AW_ENDPOINT)
@@ -24,6 +25,7 @@ exports.database_id = database_id;
 exports.word_collection_id = word_collection_id;
 exports.list_collection_id = list_collection_id;
 exports.student_collection_id = student_collection_id;
+exports.spell_collection_id = spell_collection_id;
 exports.storage_bucket_id = storage_bucket_id;
 
 exports.isValidSession = (user_id, session_id) => {
