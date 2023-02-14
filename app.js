@@ -14,6 +14,7 @@ const cmsRouter = require('./routes/cms');
 const wordsRouter = require('./routes/words');
 const listsRouter = require('./routes/lists');
 const studentsRouter = require('./routes/students');
+const apiRouter = require('./routes/api');
 
 const publicDir = path.join(__dirname, 'public');
 
@@ -49,6 +50,7 @@ app.use('/cms', cmsRouter);
 app.use('/cms/words', wordsRouter);
 app.use('/cms/lists', listsRouter);
 app.use('/cms/students', studentsRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

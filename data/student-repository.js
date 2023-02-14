@@ -47,6 +47,15 @@ exports.createStudent = async (name, nickname, wordlist) => {
 }
 
 exports.updateStudent = (student_id, name, nickname, wordlist) => {
+    return new Promise(async (resolve, reject) => {
+        await database.deleteDocument(database_id, student_collection_id, student_id);
+        await database.createDocument(database_id, student_collection_id, student_id, {
+            name: name,
+            nickname: nickname,
+        });
+        await spellRepo.updateSpell(student_id, wordlist);
+        resolve(true);
+    });
 
 }
 
