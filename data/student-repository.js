@@ -1,7 +1,7 @@
 const {
     database,
     database_id,
-    student_collection_id, spell_collection_id
+    student_collection_id
 } = require("../service/appwrite");
 const uuid = require("uuid");
 const spellRepo = require("./spell-repository");
@@ -46,7 +46,7 @@ exports.createStudent = async (name, nickname, wordlist) => {
     });
 }
 
-exports.updateStudent = (student_id, name, nickname, wordlist, spell) => {
+exports.updateStudent = (student_id, name, nickname, wordlist) => {
 
 }
 
