@@ -16,13 +16,16 @@ exports.getWord = (word_id) => {
 }
 
 exports.getWords = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         database.listDocuments(database_id, word_collection_id)
             .then((response) => {
-                resolve(response.documents);
+                let words = response.documents.map(object => {
+                    return {word: object.word, id: object["$id"]}
+                });
+                resolve(words);
             })
-            .catch((error) => {
-                reject(error);
+            .catch(() => {
+                resolve([]);
             });
     });
 }

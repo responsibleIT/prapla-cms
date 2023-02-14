@@ -22,13 +22,16 @@ exports.getStudent = (student_id) => {
 }
 
 exports.getStudents = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         database.listDocuments(database_id, student_collection_id)
             .then((response) => {
-                resolve(response.documents);
+                let students = response.documents.map(object => {
+                    return {name: object.name, nickname: object.nickname, id: object["$id"]}
+                });
+                resolve(students);
             })
-            .catch((error) => {
-                reject(error);
+            .catch(() => {
+                resolve([]);
             });
     });
 }

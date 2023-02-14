@@ -14,13 +14,16 @@ exports.getList = (list_id) => {
 }
 
 exports.getLists = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         database.listDocuments(database_id, list_collection_id)
             .then((response) => {
-                resolve(response.documents);
+                let lists = response.documents.map(object => {
+                    return {list: object.category, id: object["$id"]}
+                });
+                resolve(lists);
             })
-            .catch((error) => {
-                reject(error);
+            .catch(() => {
+                resolve([]);
             });
     });
 }
