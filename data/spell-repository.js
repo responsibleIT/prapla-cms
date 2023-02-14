@@ -28,11 +28,16 @@ exports.getSpellByStudent = (studentId) => {
 exports.createSpell = (studentId, wordlist) => {
     return new Promise(async (resolve, reject) => {
         const spell = await spellCreator.generate();
-        await database.createDocument(database_id, spell_collection_id, studentId, {
+        resolve(await database.createDocument(database_id, spell_collection_id, studentId, {
             student: studentId,
             spell: spell,
             wordlist: wordlist
-        });
-        resolve(true);
+        }));
+    });
+}
+
+exports.deleteSpell = (spellId) => {
+    return new Promise(async (resolve, reject) => {
+        resolve(await database.deleteDocument(database_id, spell_collection_id, spellId));
     });
 }

@@ -51,13 +51,8 @@ exports.updateStudent = (student_id, name, nickname, wordlist, spell) => {
 }
 
 exports.deleteStudent = (student_id) => {
-    return new Promise((resolve, reject) => {
-        database.deleteDocument(database_id, student_collection_id, student_id)
-            .then((response) => {
-                resolve(response);
-            })
-            .catch((error) => {
-                reject(error);
-            });
+    return new Promise(async (resolve, reject) => {
+        await database.deleteDocument(database_id, student_collection_id, student_id);
+        resolve(await spellRepo.deleteSpell(student_id));
     });
 }
