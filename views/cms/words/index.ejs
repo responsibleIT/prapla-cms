@@ -1,7 +1,6 @@
 <%- include ('../../header.ejs') %>
     <%- include ('../nav.ejs') %>
         <div id="words-container">
-            <h1><%= title %></h1>
             <a id="upload-word-link" href="/cms/words/upload">Create a new word</a>
             <% if(typeof (words) != "undefined") { %>
                 <ul>

@@ -1,8 +1,8 @@
-<div id="container" class="container mx-auto grid grid-cols-12">
+<div id="container" class="grid grid-cols-12">
     <div id="nav-container" class="col-span-2">
         <nav class="menu min-h-screen">
-            <h1 class="text-2xl font-bold text-black-100">Prapla</h1>
             <ul id="nav-list">
+                <li><h1 class="text-3xl font-bold">Prapla</h1></li>
                 <li><a class="active" href="/cms">Dashboard</a></li>
                 <li><a href="/cms/students">Kinderen</a></li>
                 <li><a href="/cms/lists">Lijsten</a></li>
@@ -20,4 +20,5 @@
 
         </script>
     </div>
-    <div id="content-container" class="col-span-8">
+    <div id="content-container" class="container p-4 col-span-10 bg-slate-100">
+        <h1 class="text-2xl font-bold text-slate-400 italic pb-4"><%= title %></h1>
