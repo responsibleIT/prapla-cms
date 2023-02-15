@@ -1,88 +1,75 @@
 <%- include ('../../../header.ejs') %>
-<div id="container">
-    <%- include ('../../nav.ejs') %>
-    <div id="content-container">
-        <h1><%= title %></h1>
-        <form method="post" enctype="multipart/form-data"
-              onsubmit="return confirm('Are you sure you want to submit?');">
-            <div>
-                <label for="category">List category:</label>
-                <input required type="text" id="category" name="category"
-                       value=<%= editable ? category : null %>></textarea>
-            </div>
-
-            <% if (typeof (allWords) != "undefined") { %>
-            <fieldset>
-                <legend>Woorden</legend>
-                    <% allWords.forEach(word => { %>
-                        <div>
-<!--                            TODO: fix word checkbox two way state, disabled for now-->
-                            <% if(word.subscribedWordList) { %>
-                                <% if (word.subscribedWordList.some(e => e === listId)) { %>
-                                    <input data-id="<%= word.id %>" type="checkbox"
-                                           id="<%= word.word %>" name="words"
-                                           value="<%= word.id %>" checked disabled/>
-                                <% } else { %>
-                                    <input data-id="<%= word.id %>" type="checkbox"
-                                           id="<%= word.word %>" name="words"
-                                           value="<%= word.id %>" disabled />
-                                <% } %>
-                            <% } else { %>
-                                <input data-id="<%= word.id %>" type="checkbox" id="<%= word.word %>" name="words"
-                                       value="<%= word.id %>" disabled />
-                            <% } %>
-                            <label for=<%= word.word %>><%= word.word %></label>
-                        </div>
-                    <% }) %>
-            </fieldset>
-            <% } %>
-
-            <div>
-                <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
-            </div>
-
-            <% if (editable === true) { %>
-                <input id="delete" type="submit" name="delete" value="delete">
-            <% } %>
-        </form>
-
-        <style>
-            #container {
-                display: flex;
-                flex-direction: row;
-                height: 100%;
-            }
-
-            #content-container {
-                padding: 16px 16px 16px 32px;
-            }
-
-
-            label {
-                display: block;
-                margin-bottom: 0.5rem;
-            }
-
-
-            #category {
-                margin-bottom: 1rem;
-            }
-
-            #delete {
-                margin-top: 1rem;
-                background-color: red;
-                padding: 16px;
-            }
-
-        </style>
-
-        <script>
-            const {Client, Account, ID} = Appwrite;
-            const client = new Client()
-                .setEndpoint("https://aw.responsible-it.nl/v1")
-                .setProject("63a32dec14be845ec0f9")
-
-        </script>
+<%- include ('../../nav.ejs') %>
+<h1><%= title %></h1>
+<form method="post" enctype="multipart/form-data"
+      onsubmit="return confirm('Are you sure you want to submit?');">
+    <div>
+        <label for="category">List category:</label>
+        <input required type="text" id="category" name="category"
+               value=<%= editable ? category : null %>></textarea>
     </div>
+
+    <% if (typeof (allWords) != "undefined") { %>
+        <fieldset>
+            <legend>Woorden</legend>
+            <% allWords.forEach(word => { %>
+                <div>
+                    <!--                            TODO: fix word checkbox two way state, disabled for now-->
+                    <% if(word.subscribedWordList) { %>
+                        <% if (word.subscribedWordList.some(e => e === listId)) { %>
+                            <input data-id="<%= word.id %>" type="checkbox"
+                                   id="<%= word.word %>" name="words"
+                                   value="<%= word.id %>" checked disabled/>
+                        <% } else { %>
+                            <input data-id="<%= word.id %>" type="checkbox"
+                                   id="<%= word.word %>" name="words"
+                                   value="<%= word.id %>" disabled/>
+                        <% } %>
+                    <% } else { %>
+                        <input data-id="<%= word.id %>" type="checkbox" id="<%= word.word %>" name="words"
+                               value="<%= word.id %>" disabled/>
+                    <% } %>
+                    <label for=<%= word.word %>><%= word.word %></label>
+                </div>
+            <% }) %>
+        </fieldset>
+    <% } %>
+
+    <div>
+        <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
+    </div>
+
+    <% if (editable === true) { %>
+        <input id="delete" type="submit" name="delete" value="delete">
+    <% } %>
+</form>
+
+<style>
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+
+    #category {
+        margin-bottom: 1rem;
+    }
+
+    #delete {
+        margin-top: 1rem;
+        background-color: red;
+        padding: 16px;
+    }
+
+</style>
+
+<script>
+    const {Client, Account, ID} = Appwrite;
+    const client = new Client()
+        .setEndpoint("https://aw.responsible-it.nl/v1")
+        .setProject("63a32dec14be845ec0f9")
+
+</script>
+</div>
 </div>
 <%- include ('../../../footer.ejs') %>

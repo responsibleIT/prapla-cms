@@ -1,123 +1,121 @@
 <%- include ('../../../header.ejs') %>
-<div id="container">
-    <%- include ('../../nav.ejs') %>
-    <div id="content-container">
-        <h1><%= title %></h1>
-        <form method="post" enctype="multipart/form-data"
-              onsubmit="return confirm('Are you sure you want to submit?');">
-            <div id="image-upload">
-                <% if (editable === true) { %>
-                    <img src=<%= imageUrl ? imageUrl + "&" + Date.now() : "/images/no-image-placeholder.webp" %> id="upload-preview"
-                         width="50%"/>
-                <% }else { %>
-                    <img src="/images/no-image-placeholder.webp" id="upload-preview" width="50%"/>
-                <% } %>
+<%- include ('../../nav.ejs') %>
+<h1><%= title %></h1>
+<form method="post" enctype="multipart/form-data"
+      onsubmit="return confirm('Are you sure you want to submit?');">
+    <div id="image-upload">
+        <% if (editable === true) { %>
+            <img src=<%= imageUrl ? imageUrl + "&" + Date.now() : "/images/no-image-placeholder.webp" %> id="upload-preview"
+                 width="50%"/>
+        <% }else { %>
+            <img src="/images/no-image-placeholder.webp" id="upload-preview" width="50%"/>
+        <% } %>
 
-                <input style="display:none;" type="file" type="image" id="image" name="image"
-                       accept="image/jpeg, image/jpg, image/png, image/svg, image/webp"
-                       oninput="document.getElementById('upload-preview').src = window.URL.createObjectURL(this.files[0])">
-                <label id="image-upload-label" for="image">Choose an image</label>
-            </div>
-            <div>
-                <label for="word">Word:</label>
-                <input required type="text" id="word" name="word" value=<%= editable ? word : null %>></textarea>
-            </div>
-
-            <% if (typeof(allWordLists) != "undefined") { %>
-                <fieldset>
-                    <legend>Lijsten</legend>
-                    <% allWordLists.forEach(list => { %>
-                        <div>
-                            <% if(typeof (subscribedLists) != "undefined") { %>
-                                <% if (subscribedLists.some(e => e.id === list.id)) { %>
-                                    <input data-id=<%= list.id %> type="checkbox"
-                                           id=<%= list.category %> name="wordlist"
-                                           value=<%= list.id %> checked/>
-                                <% } else { %>
-                                    <input data-id=<%= list.id %> type="checkbox"
-                                           id=<%= list.category %> name="wordlist"
-                                           value=<%= list.id %>/>
-                                <% } %>
-                            <% } else { %>
-                                <input data-id=<%= list.id %> type="checkbox" id=<%= list.category %> name="wordlist"
-                                       value=<%= list.id %>/>
-                            <% } %>
-                            <label for=<%= list.category %>><%= list.category %></label>
-                        </div>
-                    <% }) %>
-                </fieldset>
-            <% } %>
-
-            <% if (typeof (imageUrl) != "undefined") { %>
-            <input type="hidden" name="has-image" value="true">
-            <% } %>
-
-            <div>
-                <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
-            </div>
-
-            <% if (editable === true) { %>
-                <input id="delete" type="submit" name="delete" value="delete">
-            <% } %>
-        </form>
-
-        <style>
-            #container {
-                display: flex;
-                flex-direction: row;
-                height: 100%;
-            }
-
-            #content-container {
-                padding: 16px 16px 16px 32px;
-            }
-
-            #image-upload {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #upload-preview {
-                margin: 8px;
-                border: black solid 1px;
-            }
-
-            label {
-                display: block;
-                margin-bottom: 0.5rem;
-            }
-
-            #image {
-                margin-bottom: 1rem;
-            }
-
-            #word {
-                margin-bottom: 1rem;
-            }
-
-            #delete {
-                margin-top: 1rem;
-                background-color: red;
-                padding: 16px;
-            }
-
-            #image-upload-label {
-                cursor: pointer;
-                padding: 16px;
-                background-color: #4CAF50;
-                border-radius: 16px;
-                width: 50%;
-            }
-
-        </style>
-
-        <script>
-            const {Client, Account, ID} = Appwrite;
-            const client = new Client()
-                .setEndpoint("https://aw.responsible-it.nl/v1")
-                .setProject("63a32dec14be845ec0f9")
-
-        </script>
+        <input style="display:none;" type="file" type="image" id="image" name="image"
+               accept="image/jpeg, image/jpg, image/png, image/svg, image/webp"
+               oninput="document.getElementById('upload-preview').src = window.URL.createObjectURL(this.files[0])">
+        <label id="image-upload-label" for="image">Choose an image</label>
     </div>
+    <div>
+        <label for="word">Word:</label>
+        <input required type="text" id="word" name="word" value=<%= editable ? word : null %>></textarea>
+    </div>
+
+    <% if (typeof (allWordLists) != "undefined") { %>
+        <fieldset>
+            <legend>Lijsten</legend>
+            <% allWordLists.forEach(list => { %>
+                <div>
+                    <% if(typeof (subscribedLists) != "undefined") { %>
+                        <% if (subscribedLists.some(e => e.id === list.id)) { %>
+                            <input data-id=<%= list.id %> type="checkbox"
+                                   id=<%= list.category %> name="wordlist"
+                                   value=<%= list.id %> checked/>
+                        <% } else { %>
+                            <input data-id=<%= list.id %> type="checkbox"
+                                   id=<%= list.category %> name="wordlist"
+                                   value=<%= list.id %>/>
+                        <% } %>
+                    <% } else { %>
+                        <input data-id=<%= list.id %> type="checkbox" id=<%= list.category %> name="wordlist"
+                               value=<%= list.id %>/>
+                    <% } %>
+                    <label for=<%= list.category %>><%= list.category %></label>
+                </div>
+            <% }) %>
+        </fieldset>
+    <% } %>
+
+    <% if (typeof (imageUrl) != "undefined") { %>
+        <input type="hidden" name="has-image" value="true">
+    <% } %>
+
+    <div>
+        <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
+    </div>
+
+    <% if (editable === true) { %>
+        <input id="delete" type="submit" name="delete" value="delete">
+    <% } %>
+</form>
 </div>
+
+
+<style>
+    #container {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+    }
+
+    #content-container {
+        padding: 16px 16px 16px 32px;
+    }
+
+    #image-upload {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #upload-preview {
+        margin: 8px;
+        border: black solid 1px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    #image {
+        margin-bottom: 1rem;
+    }
+
+    #word {
+        margin-bottom: 1rem;
+    }
+
+    #delete {
+        margin-top: 1rem;
+        background-color: red;
+        padding: 16px;
+    }
+
+    #image-upload-label {
+        cursor: pointer;
+        padding: 16px;
+        background-color: #4CAF50;
+        border-radius: 16px;
+        width: 50%;
+    }
+
+</style>
+
+<script>
+    const {Client, Account, ID} = Appwrite;
+    const client = new Client()
+        .setEndpoint("https://aw.responsible-it.nl/v1")
+        .setProject("63a32dec14be845ec0f9")
+
+</script>
 <%- include ('../../../footer.ejs') %>

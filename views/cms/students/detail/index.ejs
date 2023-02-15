@@ -1,111 +1,97 @@
 <%- include ('../../../header.ejs') %>
-<div id="container">
-    <%- include ('../../nav.ejs') %>
-    <div id="content-container">
-        <h1><%= title %></h1>
-        <form method="post" enctype="multipart/form-data"
-              onsubmit="return confirm('Are you sure you want to submit?');">
-            <div>
-                <label for="name">Name:</label>
-                <input required type="text" id="name" name="name" value=<%= editable ? name : null %>></textarea>
-            </div>
-
-            <div>
-                <label for="nickname">Nickname:</label>
-                <input required type="text" id="nickname" name="nickname"
-                       value=<%= editable ? nickname : null %>></textarea>
-            </div>
-
-            <% if (typeof (allWordLists) != "undefined") { %>
-                <fieldset>
-                    <legend>Lijsten</legend>
-                    <% allWordLists.forEach(list => { %>
-                        <div>
-                            <% if(typeof (subscribedList) != "undefined") { %>
-                                <% if (subscribedList === list.id) { %>
-                                    <input data-id=<%= list.id %> type="radio"
-                                           id=<%= list.category %> name="wordlist"
-                                           value=<%= list.id %> checked/>
-                                <% } else { %>
-                                    <input data-id=<%= list.id %> type="radio"
-                                           id=<%= list.category %> name="wordlist"
-                                           value=<%= list.id %>/>
-                                <% } %>
-                            <% } else { %>
-                                <input data-id=<%= list.id %> type="radio" id=<%= list.category %> name="wordlist"
-                                       value=<%= list.id %>/>
-                            <% } %>
-                            <label for=<%= list.category %>><%= list.category %></label>
-                        </div>
-                    <% }) %>
-                </fieldset>
-            <% } %>
-
-            <% if (typeof (imageUrl) != "undefined") { %>
-                <input type="hidden" name="has-image" value="true">
-            <% } %>
-
-            <% if (editable) { %>
-                <div>
-                    <label for="spell">Magic spell:</label>
-                    <input type="text" id="spell" name="spell"
-                           value="<%= editable ? spell: null %>"></textarea>
-                </div>
-            <% } %>
-
-            <div>
-                <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
-            </div>
-
-            <% if (editable === true) { %>
-                <input id="delete" type="submit" name="delete" value="delete">
-            <% } %>
-        </form>
-
-        <style>
-            #container {
-                display: flex;
-                flex-direction: row;
-                height: 100%;
-            }
-
-            #content-container {
-                padding: 16px 16px 16px 32px;
-            }
-
-            label {
-                display: block;
-                margin-bottom: 0.5rem;
-            }
-
-
-            #name {
-                margin-bottom: 1rem;
-            }
-
-            #nickname {
-                margin-bottom: 1rem;
-            }
-
-            #spell {
-                margin-bottom: 1rem;
-            }
-
-            #delete {
-                margin-top: 1rem;
-                background-color: red;
-                padding: 16px;
-            }
-
-        </style>
-
-        <script>
-            const {Client, Account, ID} = Appwrite;
-            const client = new Client()
-                .setEndpoint("https://aw.responsible-it.nl/v1")
-                .setProject("63a32dec14be845ec0f9")
-
-        </script>
+<%- include ('../../nav.ejs') %>
+<h1><%= title %></h1>
+<form method="post" enctype="multipart/form-data"
+      onsubmit="return confirm('Are you sure you want to submit?');">
+    <div>
+        <label for="name">Name:</label>
+        <input required type="text" id="name" name="name" value=<%= editable ? name : null %>></textarea>
     </div>
+
+    <div>
+        <label for="nickname">Nickname:</label>
+        <input required type="text" id="nickname" name="nickname"
+               value=<%= editable ? nickname : null %>></textarea>
+    </div>
+
+    <% if (typeof (allWordLists) != "undefined") { %>
+        <fieldset>
+            <legend>Lijsten</legend>
+            <% allWordLists.forEach(list => { %>
+                <div>
+                    <% if(typeof (subscribedList) != "undefined") { %>
+                        <% if (subscribedList === list.id) { %>
+                            <input data-id=<%= list.id %> type="radio"
+                                   id=<%= list.category %> name="wordlist"
+                                   value=<%= list.id %> checked/>
+                        <% } else { %>
+                            <input data-id=<%= list.id %> type="radio"
+                                   id=<%= list.category %> name="wordlist"
+                                   value=<%= list.id %>/>
+                        <% } %>
+                    <% } else { %>
+                        <input data-id=<%= list.id %> type="radio" id=<%= list.category %> name="wordlist"
+                               value=<%= list.id %>/>
+                    <% } %>
+                    <label for=<%= list.category %>><%= list.category %></label>
+                </div>
+            <% }) %>
+        </fieldset>
+    <% } %>
+
+    <% if (typeof (imageUrl) != "undefined") { %>
+        <input type="hidden" name="has-image" value="true">
+    <% } %>
+
+    <% if (editable) { %>
+        <div>
+            <label for="spell">Magic spell:</label>
+            <input type="text" id="spell" name="spell"
+                   value="<%= editable ? spell : null %>"></textarea>
+        </div>
+    <% } %>
+
+    <div>
+        <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
+    </div>
+
+    <% if (editable === true) { %>
+        <input id="delete" type="submit" name="delete" value="delete">
+    <% } %>
+</form>
 </div>
+<style>
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+
+    #name {
+        margin-bottom: 1rem;
+    }
+
+    #nickname {
+        margin-bottom: 1rem;
+    }
+
+    #spell {
+        margin-bottom: 1rem;
+    }
+
+    #delete {
+        margin-top: 1rem;
+        background-color: red;
+        padding: 16px;
+    }
+
+</style>
+
+<script>
+    const {Client, Account, ID} = Appwrite;
+    const client = new Client()
+        .setEndpoint("https://aw.responsible-it.nl/v1")
+        .setProject("63a32dec14be845ec0f9")
+
+</script>
 <%- include ('../../../footer.ejs') %>

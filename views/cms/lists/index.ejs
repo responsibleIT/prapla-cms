@@ -1,8 +1,5 @@
 <%- include ('../../header.ejs') %>
-<div id="container">
     <%- include ('../nav.ejs') %>
-    <div id="content-row">
-        <div id="list-container">
             <h1><%= title %></h1>
             <a id="upload-word-link" href="/cms/lists/upload">Create a new list</a>
             <% if(typeof (lists) != "undefined") { %>
@@ -17,22 +14,7 @@
                 </ul>
             <% } %>
         </div>
-    </div>
     <style>
-        #container {
-            display: flex;
-            flex-direction: row;
-            height: 100%;
-        }
-
-        #content-row {
-            display: flex;
-            width: 100%;
-            flex-direction: row;
-            flex-wrap: wrap;
-            padding: 16px 16px 16px 32px;
-        }
-
         #content-row > div {
             flex: 1;
             padding-right: 32px;

@@ -1,26 +1,23 @@
-<div id="nav-container" class="col-span-2">
-    <nav>
-        <h2>Prapla</h2>
-        <ul id="nav-list">
-            <li><a href="/cms">Dashboard</a></li>
-            <li><a href="/cms/students">Kinderen</a></li>
-            <li><a href="/cms/lists">Lijsten</a></li>
-            <li><a href="/cms/words">Woorden</a></li>
-            <li><a href="#about">Gebruikers</a></li>
-            <li>
-                <hr/>
-            </li>
-            <li><a href="/logout">Uitloggen</a></li>
+<div id="container" class="container mx-auto grid grid-cols-12">
+    <div id="nav-container" class="col-span-2">
+        <nav class="menu min-h-screen">
+            <h1 class="text-2xl font-bold text-black-100">Prapla</h1>
+            <ul id="nav-list">
+                <li><a class="active" href="/cms">Dashboard</a></li>
+                <li><a href="/cms/students">Kinderen</a></li>
+                <li><a href="/cms/lists">Lijsten</a></li>
+                <li><a href="/cms/words">Woorden</a></li>
+                <li><a href="#about">Gebruikers</a></li>
+            </ul>
+            <a class="sticky top-[90vh] btn bg-red-500 ml-8 mr-8" href="/logout">Uitloggen</a>
+        </nav>
 
-        </ul>
-    </nav>
-
-    <style>
+        <style>
 
 
-    </style>
-    <script>
+        </style>
+        <script>
 
-    </script>
-</div>
-<div id="content-container" class="container pt-6">
+        </script>
+    </div>
+    <div id="content-container" class="col-span-8">
