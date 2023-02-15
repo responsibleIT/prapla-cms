@@ -1,20 +1,11 @@
 <%- include ('../../header.ejs') %>
-<div id="container">
+<div id="container" class="grid grid-cols-12">
     <%- include ('../nav.ejs') %>
-<div id="content-container">
     <h1><%= title %></h1>
     <p>Welkom</p>
 
     <style>
-        #container {
-            display: flex;
-            flex-direction: row;
-            height: 100%;
-        }
 
-        #content-container {
-            padding: 16px 16px 16px 32px;
-        }
     </style>
 
     <script>
