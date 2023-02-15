@@ -5,6 +5,6 @@ exports.getWordList = async (req, res) => {
         const wordList = await apiRepo.getWholeListBySpell(req.query.spell);
         res.status(200).json(wordList);
     } catch (error) {
-        res.status(404).json({message: error.message});
+        res.status(404).json({message: "Not found"});
     }
 };

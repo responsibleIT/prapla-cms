@@ -10,7 +10,7 @@ exports.getWholeListBySpell = (spell) => {
 
             let wordList = allWords.map(word => {
                 if (word.subscribedWordList.includes(wordlist_id)) {
-                    return {id: word.id, word: word.word}
+                    return {id: word.id, word: word.word, image: word.image}
                 }
             }).filter(Boolean);
             resolve(wordList);

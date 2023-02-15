@@ -20,7 +20,7 @@ exports.getWords = () => {
         database.listDocuments(database_id, word_collection_id)
             .then((response) => {
                 let words = response.documents.map(object => {
-                    return {word: object.word, id: object["$id"], subscribedWordList: object.wordlist}
+                    return {word: object.word, id: object["$id"], subscribedWordList: object.wordlist, image: object.image}
                 });
                 resolve(words);
             })
