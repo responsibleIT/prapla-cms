@@ -31,8 +31,6 @@ exports.storage_bucket_id = storage_bucket_id;
 
 exports.isValidSession = (user_id, session_id) => {
     return new Promise(async (resolve, reject) => {
-        console.log("UID", user_id);
-        console.log("SID", session_id);
         users.listSessions(user_id)
             .then((response) => {
                 let sessions = response.sessions;
