@@ -4,6 +4,12 @@ exports.getLoginView = (req, res, next) => {
     res.render('login/index', {title: 'Prapla'});
 }
 
+exports.logout = (req, res, next) => {
+    res.clearCookie("user_id");
+    res.clearCookie("session_id");
+    res.redirect('/');
+}
+
 exports.validateLogin = (req, res, next) => {
     let session_id = req.body["session_id"];
     let user_id = req.body["user_id"];
