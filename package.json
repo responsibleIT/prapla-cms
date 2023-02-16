@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css",
     "start": "npm run tailwind:css && set NODE_ENV=production && node ./bin/www ",
     "devStart": "npm run tailwind:css && set NODE_ENV=development && nodemon ./bin/www --ext js,json,ejs",
     "debug": "npm run tailwind:css && set NODE_ENV=development && nodemon --inspect ./bin/www",
-    "prodDebug": "npm run tailwind:css && set NODE_ENV=development && node ./bin/www",
-    "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css"
+    "prodDebug": "npm run tailwind:css && set NODE_ENV=development && node ./bin/www"
   },
   "dependencies": {
     "autoprefixer": "^10.4.13",

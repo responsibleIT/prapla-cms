@@ -19,5 +19,5 @@ exports.getListsView = async (req, res) => {
 
 exports.getStudentsView = async (req, res) => {
     let students = await studentRepo.getStudents();
-    res.render('cms/students/index', {title: 'Students', students: students});
+    res.render('cms/students/index', {title: 'Kinderen', students: students});
 }
