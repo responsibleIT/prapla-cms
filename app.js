@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const liveReload = require("livereload");
 const connectLiveReload = require("connect-livereload");
-
+const cors = require('cors');
 require('dotenv').config()
 
 const loginRouter = require('./routes/login');
@@ -43,6 +43,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(publicDir));
+app.use(cors());
 
 app.use('/', loginRouter);
 app.use('/users', usersRouter);
