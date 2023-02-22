@@ -2572,6 +2572,9 @@ html {
 .card-normal .card-title {
   margin-bottom: 0.75rem;
 }
+.fixed {
+  position: fixed;
+}
 .sticky {
   position: sticky;
 }
@@ -2661,10 +2664,6 @@ html {
 .align-middle {
   vertical-align: middle;
 }
-.text-2xl {
-  font-size: 1.5rem;
-  line-height: 2rem;
-}
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -2683,7 +2682,7 @@ html {
   --tw-text-opacity: 1;
   color: hsl(var(--pc) / var(--tw-text-opacity));
 }
-.text-slate-400 {
+.text-slate-500 {
   --tw-text-opacity: 1;
-  color: rgb(148 163 184 / var(--tw-text-opacity));
+  color: rgb(100 116 139 / var(--tw-text-opacity));
 }

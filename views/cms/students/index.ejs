@@ -2,12 +2,90 @@
 <%- include ('../nav.ejs') %>
 <div class="grid grid-cols-4 gap-4 pt-4">
     <a href="/cms/students/upload" class="card bg-green-600 text-primary-content">
-        <div class="card-body items-center text-center justify-center">
+        <div class="btn bg-green-600 card-body items-center text-center justify-center">
             <span class="text-5xl text-bold align-middle pb-2">+</span>
         </div>
     </a>
     <% if(typeof (students) != "undefined") { %>
         <% students.forEach(student => { %>
+            <div class="card bg-base-100 shadow-l">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><%= student.name %> </h2>
+                        <p> <%= student.nickname %></p>
+                        <div class="card-actions justify-start">
+                            <a class="btn bg-blue-600" href="students/<%= student.id %>">
+                                Bewerken
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-l">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><%= student.name %> </h2>
+                        <p> <%= student.nickname %></p>
+                        <div class="card-actions justify-start">
+                            <a class="btn bg-blue-600" href="students/<%= student.id %>">
+                                Bewerken
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-l">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><%= student.name %> </h2>
+                        <p> <%= student.nickname %></p>
+                        <div class="card-actions justify-start">
+                            <a class="btn bg-blue-600" href="students/<%= student.id %>">
+                                Bewerken
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-l">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><%= student.name %> </h2>
+                        <p> <%= student.nickname %></p>
+                        <div class="card-actions justify-start">
+                            <a class="btn bg-blue-600" href="students/<%= student.id %>">
+                                Bewerken
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-l">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><%= student.name %> </h2>
+                        <p> <%= student.nickname %></p>
+                        <div class="card-actions justify-start">
+                            <a class="btn bg-blue-600" href="students/<%= student.id %>">
+                                Bewerken
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-l">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><%= student.name %> </h2>
+                        <p> <%= student.nickname %></p>
+                        <div class="card-actions justify-start">
+                            <a class="btn bg-blue-600" href="students/<%= student.id %>">
+                                Bewerken
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card bg-base-100 shadow-l">
                 <div class="card">
                     <div class="card-body">
