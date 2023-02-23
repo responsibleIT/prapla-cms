@@ -1,40 +1,60 @@
 <%- include ('../../../header.ejs') %>
 <%- include ('../../nav.ejs') %>
-<form method="post" enctype="multipart/form-data"
+<form class="card rounded-none bg-base-100 h-screen w-4/12 p-8 space-y-4" method="post" enctype="multipart/form-data"
       onsubmit="return confirm('Are you sure you want to submit?');">
-    <div>
-        <label for="name">Name:</label>
-        <input required type="text" id="name" name="name" value=<%= editable ? name : null %>></textarea>
+    <h1 class="text-3xl font-bold text-slate-500 italic"><%= title %></h1>
+
+    <div class="form-control w-full max-w-xs">
+        <label for="name" class=" label">
+            <span class="label-text font-bold">Naam kind</span>
+        </label>
+        <input required class="input bg-gray-200 border-2 border-gray-300 w-full max-w-xs" type="text" id="name"
+               name="name"
+               value=<%= editable ? name : null %>></textarea>
     </div>
 
-    <div>
-        <label for="nickname">Nickname:</label>
-        <input required type="text" id="nickname" name="nickname"
+    <div class="form-control w-full max-w-xs">
+        <label class="label" for="nickname">
+            <span class="label-text font-bold">Bijnaam kind</span>
+        </label>
+        <input required class="input bg-gray-200 border-2 border-gray-300 w-full max-w-xs" type="text" id="nickname"
+               name="nickname"
                value=<%= editable ? nickname : null %>></textarea>
     </div>
 
     <% if (typeof (allWordLists) != "undefined") { %>
         <fieldset>
-            <legend>Lijsten</legend>
-            <% allWordLists.forEach(list => { %>
-                <div>
-                    <% if(typeof (subscribedList) != "undefined") { %>
-                        <% if (subscribedList === list.id) { %>
-                            <input data-id=<%= list.id %> type="radio"
-                                   id=<%= list.category %> name="wordlist"
-                                   value=<%= list.id %> checked/>
-                        <% } else { %>
-                            <input data-id=<%= list.id %> type="radio"
-                                   id=<%= list.category %> name="wordlist"
-                                   value=<%= list.id %>/>
-                        <% } %>
-                    <% } else { %>
-                        <input data-id=<%= list.id %> type="radio" id=<%= list.category %> name="wordlist"
-                               value=<%= list.id %>/>
-                    <% } %>
-                    <label for=<%= list.category %>><%= list.category %></label>
-                </div>
-            <% }) %>
+            <label class="label" for="nickname">
+                <span class="label-text font-bold">Woordenlijsten</span>
+            </label>
+            <div class="card border-2 border-gray-300 bg-gray-200 p-4 max-h-96 overflow-auto">
+                <% allWordLists.forEach(list => { %>
+                    <div>
+                        <label class="label cursor-pointer" for=<%= list.category %>>
+                            <span class="label-text"><%= list.category %></span>
+                            <% if(typeof (subscribedList) != "undefined") { %>
+                                <% if (subscribedList === list.id) { %>
+                                    <input data-id=<%= list.id %> type="radio"
+                                           id=<%= list.category %> name="wordlist"
+                                           class="radio"
+                                           value=<%= list.id %> checked/>
+                                <% } else { %>
+                                    <input data-id=<%= list.id %> type="radio"
+                                           id=<%= list.category %> name="wordlist"
+                                           class="radio"
+                                           value=<%= list.id %>/>
+                                <% } %>
+                            <% } else { %>
+                                <input data-id=<%= list.id %>
+                                       type="radio"
+                                       id=<%= list.category %> name="wordlist"
+                                       class="radio"
+                                       value=<%= list.id %>/>
+                            <% } %>
+                        </label>
+                    </div>
+                <% }) %>
+            </div>
         </fieldset>
     <% } %>
 
@@ -43,48 +63,25 @@
     <% } %>
 
     <% if (editable) { %>
-        <div>
-            <label for="spell">Magic spell:</label>
-            <input type="text" id="spell" name="spell"
+        <div class="form-control w-full max-w-xs">
+            <label for="spell" class="label">
+                <span class="label-text font-bold">Magische spreuk</span>
+            </label>
+            <input disabled class="input input-bordered w-full max-w-xs" type="text" id="spell" name="spell"
                    value="<%= editable ? spell : null %>"></textarea>
         </div>
     <% } %>
 
-    <div>
-        <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
+    <div class="pt-8">
+        <input class="btn bg-green-600 px-8" type="submit" value="<%= editable ? "Update" : "Upload" %>">
+
+        <% if (editable === true) { %>
+            <input class="btn bg-red-600 px-8" id="delete" type="submit" name="delete" value="delete">
+        <% } %>
     </div>
 
-    <% if (editable === true) { %>
-        <input id="delete" type="submit" name="delete" value="delete">
-    <% } %>
 </form>
 </div>
-<style>
-    label {
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
-
-    #name {
-        margin-bottom: 1rem;
-    }
-
-    #nickname {
-        margin-bottom: 1rem;
-    }
-
-    #spell {
-        margin-bottom: 1rem;
-    }
-
-    #delete {
-        margin-top: 1rem;
-        background-color: red;
-        padding: 16px;
-    }
-
-</style>
 
 <script>
     const {Client, Account, ID} = Appwrite;

@@ -1,6 +1,6 @@
-<div id="container" class="grid grid-cols-12">
+<div id="container" class="h-screen grid grid-cols-12">
     <div id="nav-container" class="col-span-2">
-        <nav class="menu min-h-screen fixed">
+        <nav class="menu min-h-screen w-2/12 fixed">
             <ul id="nav-list">
                 <li><h1 class="text-3xl font-bold">Prapla</h1></li>
                 <li><a class="active" href="/cms">Dashboard</a></li>
@@ -9,7 +9,7 @@
                 <li><a href="/cms/words">Woorden</a></li>
                 <li><a href="#about">Gebruikers</a></li>
             </ul>
-            <a class="sticky top-[90vh] btn bg-red-500 ml-8 mr-8" href="/logout">Uitloggen</a>
+            <a class="sticky top-[95vh] btn bg-red-500 ml-8 mr-8" href="/logout">Uitloggen</a>
         </nav>
 
         <style>
@@ -20,5 +20,5 @@
 
         </script>
     </div>
-    <div class="container p-4 col-span-10 bg-slate-100">
-        <h1 class="text-3xl font-bold text-slate-500 italic"><%= title %></h1>
+    <div class="container pl-4 col-span-10 bg-slate-100 h-full">
+<!--        <h1 class="text-3xl font-bold text-slate-500 italic"><%= title %></h1>-->
