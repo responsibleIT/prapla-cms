@@ -9,12 +9,12 @@ exports.getDashboardView = async (req, res) => {
 
 exports.getWordsView = async (req, res) => {
     let words = await wordRepo.getWords();
-    res.render('cms/words/index', {title: 'Words', words: words});
+    res.render('cms/words/index', {title: 'Woorden', words: words});
 }
 
 exports.getListsView = async (req, res) => {
     let lists = await listRepo.getLists();
-    res.render('cms/lists/index', {title: 'Lists', lists: lists});
+    res.render('cms/lists/index', {title: 'Woordenlijsten', lists: lists});
 }
 
 exports.getStudentsView = async (req, res) => {

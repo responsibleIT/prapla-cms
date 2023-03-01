@@ -3,11 +3,11 @@
         <nav class="menu min-h-screen w-2/12 fixed">
             <ul id="nav-list">
                 <li><h1 class="text-3xl font-bold">Prapla</h1></li>
-                <li><a class="active" href="/cms">Dashboard</a></li>
-                <li><a href="/cms/students">Kinderen</a></li>
-                <li><a href="/cms/lists">Lijsten</a></li>
-                <li><a href="/cms/words">Woorden</a></li>
-                <li><a href="#about">Gebruikers</a></li>
+                <li><a <%if(active=="dashboard"){%>class="active bg-red-600"<%}%> href="/cms">Dashboard</a></li>
+                <li><a <%if(active=="students"){%>class="active bg-red-600"<%}%> href="/cms/students">Kinderen</a></li>
+                <li><a <%if(active=="lists"){%>class="active bg-red-600"<%}%> href="/cms/lists">Woordenlijsten</a></li>
+                <li><a <%if(active=="words"){%>class="active bg-red-600"<%}%> href="/cms/words">Woorden</a></li>
+                <li><a <%if(active=="users"){%>class="active bg-red-600"<%}%> href="/cms/users">Gebruikers</a></li>
             </ul>
             <a class="sticky top-[95vh] btn bg-red-500 ml-8 mr-8" href="/logout">Uitloggen</a>
         </nav>

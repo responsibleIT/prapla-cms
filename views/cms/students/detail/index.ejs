@@ -1,5 +1,5 @@
 <%- include ('../../../header.ejs') %>
-<%- include ('../../nav.ejs') %>
+<%- include ('../../nav.ejs', {active: "students"}) %>
 <form class="card rounded-none bg-base-100 h-screen w-4/12 p-8 space-y-4" method="post" enctype="multipart/form-data"
       onsubmit="return confirm('Are you sure you want to submit?');">
     <h1 class="text-3xl font-bold text-slate-500 italic"><%= title %></h1>
@@ -74,8 +74,9 @@
 
     <div class="pt-8">
         <input class="btn bg-green-600 px-8" type="submit" value="<%= editable ? "Update" : "Upload" %>">
+        <a class="btn bg-orange-400 px-8" href="/cms/students">Annuleren</a>
 
-        <% if (editable === true) { %>
+    <% if (editable === true) { %>
             <input class="btn bg-red-600 px-8" id="delete" type="submit" name="delete" value="delete">
         <% } %>
     </div>

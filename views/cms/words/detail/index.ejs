@@ -1,47 +1,65 @@
 <%- include ('../../../header.ejs') %>
-<%- include ('../../nav.ejs') %>
-<form method="post" enctype="multipart/form-data"
+<%- include ('../../nav.ejs', {active: "words"}) %>
+<form class="card rounded-none bg-base-100 h-screen w-4/12 p-8 space-y-4" method="post" enctype="multipart/form-data"
       onsubmit="return confirm('Are you sure you want to submit?');">
-    <div id="image-upload">
+    <h1 class="text-3xl font-bold text-slate-500 italic"><%= title %></h1>
+
+    <div class="form-control w-full max-w-xs">
+        <label for="word" class="label">
+            <span class="label-text font-bold">Woord</span>
+        </label>
+        <input required class="input bg-gray-200 border-2 border-gray-300 w-full max-w-xs" type="text" id="word"
+               name="word" value=<%= editable ? word : null %>></textarea>
+    </div>
+
+    <div class="form-control w-full max-w-xs">
+        <label class="label">
+            <span class="label-text font-bold">Afbeelding</span>
+            <label class="btn btn-xs bg-green-600 px-8" for="image">
+                Voeg afbeelding toe
+            </label>
+        </label>
         <% if (editable === true) { %>
             <img src=<%= imageUrl ? imageUrl + "&" + Date.now() : "/images/no-image-placeholder.webp" %> id="upload-preview"
-                 width="50%"/>
+                 width="100%"/>
         <% }else { %>
             <img src="/images/no-image-placeholder.webp" id="upload-preview" width="50%"/>
         <% } %>
-
-        <input style="display:none;" type="file" type="image" id="image" name="image"
+        <input style="display:none;" type="file" type="image"
+               id="image" name="image"
                accept="image/jpeg, image/jpg, image/png, image/svg, image/webp"
                oninput="document.getElementById('upload-preview').src = window.URL.createObjectURL(this.files[0])">
-        <label id="image-upload-label" for="image">Choose an image</label>
-    </div>
-    <div>
-        <label for="word">Word:</label>
-        <input required type="text" id="word" name="word" value=<%= editable ? word : null %>></textarea>
     </div>
 
     <% if (typeof (allWordLists) != "undefined") { %>
         <fieldset>
-            <legend>Lijsten</legend>
-            <% allWordLists.forEach(list => { %>
-                <div>
-                    <% if(typeof (subscribedLists) != "undefined") { %>
-                        <% if (subscribedLists.some(e => e.id === list.id)) { %>
-                            <input data-id=<%= list.id %> type="checkbox"
-                                   id=<%= list.category %> name="wordlist"
-                                   value=<%= list.id %> checked/>
-                        <% } else { %>
-                            <input data-id=<%= list.id %> type="checkbox"
-                                   id=<%= list.category %> name="wordlist"
-                                   value=<%= list.id %>/>
-                        <% } %>
-                    <% } else { %>
-                        <input data-id=<%= list.id %> type="checkbox" id=<%= list.category %> name="wordlist"
-                               value=<%= list.id %>/>
-                    <% } %>
-                    <label for=<%= list.category %>><%= list.category %></label>
-                </div>
-            <% }) %>
+            <label class="label">
+                <span class="label-text font-bold">Woordenlijsten</span>
+            </label>
+            <div class="card border-2 border-gray-300 bg-gray-200 p-4 max-h-96 overflow-auto">
+                <% allWordLists.forEach(list => { %>
+                    <div>
+                        <label class="label cursor-pointer" for=<%= list.category %>>
+                            <span class="label-text"><%= list.category %></span>
+                            <% if(typeof (subscribedLists) != "undefined") { %>
+                                <% if (subscribedLists.some(e => e.id === list.id)) { %>
+                                    <input class="checkbox checkbox" data-id=<%= list.id %> type="checkbox"
+                                           id=<%= list.category %> name="wordlist"
+                                           value=<%= list.id %> checked/>
+                                <% } else { %>
+                                    <input class="checkbox checkbox" data-id=<%= list.id %> type="checkbox"
+                                           id=<%= list.category %> name="wordlist"
+                                           value=<%= list.id %>/>
+                                <% } %>
+                            <% } else { %>
+                                <input class="checkbox checkbox" data-id=<%= list.id %> type="checkbox"
+                                       id=<%= list.category %> name="wordlist"
+                                       value=<%= list.id %>/>
+                            <% } %>
+                        </label>
+                    </div>
+                <% }) %>
+            </div>
         </fieldset>
     <% } %>
 
@@ -49,66 +67,17 @@
         <input type="hidden" name="has-image" value="true">
     <% } %>
 
-    <div>
-        <input type="submit" value="<%= editable ? "Update" : "Upload" %>">
+    <div class="pt-8">
+        <input class="btn bg-green-600 px-8" type="submit" value="<%= editable ? "Update" : "Upload" %>">
+        <a class="btn bg-orange-400 px-8" href="/cms/words">Annuleren</a>
+
+        <% if (editable === true) { %>
+            <input class="btn bg-red-600 px-8" id="delete" type="submit" name="delete" value="delete">
+        <% } %>
     </div>
 
-    <% if (editable === true) { %>
-        <input id="delete" type="submit" name="delete" value="delete">
-    <% } %>
 </form>
 </div>
-
-
-<style>
-    #container {
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-    }
-
-    #content-container {
-        padding: 16px 16px 16px 32px;
-    }
-
-    #image-upload {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #upload-preview {
-        margin: 8px;
-        border: black solid 1px;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
-    #image {
-        margin-bottom: 1rem;
-    }
-
-    #word {
-        margin-bottom: 1rem;
-    }
-
-    #delete {
-        margin-top: 1rem;
-        background-color: red;
-        padding: 16px;
-    }
-
-    #image-upload-label {
-        cursor: pointer;
-        padding: 16px;
-        background-color: #4CAF50;
-        border-radius: 16px;
-        width: 50%;
-    }
-
-</style>
 
 <script>
     const {Client, Account, ID} = Appwrite;

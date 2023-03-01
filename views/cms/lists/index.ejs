@@ -1,41 +1,38 @@
 <%- include ('../../header.ejs') %>
-    <%- include ('../nav.ejs') %>
-            <a id="upload-word-link" href="/cms/lists/upload">Create a new list</a>
-            <% if(typeof (lists) != "undefined") { %>
-                <ul>
-                    <% lists.forEach(list => { %>
-                        <li>
-                            <a class="square-link" href="lists/<%= list.id %>">
-                                <%= list.category %>
-                            </a>
-                        </li>
-                    <% }); %>
-                </ul>
-            <% } %>
+<%- include ('../nav.ejs', {active: "lists"}) %>
+<h1 class="text-3xl font-bold text-slate-500 italic pt-4"><%= title %></h1>
+<div class="grid grid-cols-4 gap-4 pt-4">
+    <a href="/cms/lists/upload" class="card bg-green-600 text-primary-content">
+        <div class="btn bg-green-600 card-body items-center text-center justify-center">
+            <span class="text-5xl text-bold align-middle pb-2">+</span>
         </div>
-    <style>
-        #content-row > div {
-            flex: 1;
-            padding-right: 32px;
-        }
+    </a>
+    <% if(typeof (lists) != "undefined") { %>
+        <% lists.forEach(list => { %>
+            <div class="card bg-base-100 shadow-l">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title"><%= list.category %> </h2>
+                        <!--                        TODO add word count-->
+                        <p> X woorden</p>
+                        <div class="card-actions justify-start">
+                            <a class="btn bg-blue-600" href="lists/<%= list.id %>">
+                                Bewerken
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    <% } %>
+</div>
 
-        #upload-word-link {
-            display: block;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 32px;
-            text-decoration: none;
-            border-radius: 12px;
-        }
-    </style>
+<script>
+    const {Client, Account, ID} = Appwrite;
+    const client = new Client()
+        .setEndpoint("https://aw.responsible-it.nl/v1")
+        .setProject("63a32dec14be845ec0f9")
 
-    <script>
-        const {Client, Account, ID} = Appwrite;
-        const client = new Client()
-            .setEndpoint("https://aw.responsible-it.nl/v1")
-            .setProject("63a32dec14be845ec0f9")
-
-    </script>
+</script>
 </div>
 <%- include ('../../footer.ejs') %>

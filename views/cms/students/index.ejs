@@ -1,5 +1,6 @@
 <%- include ('../../header.ejs') %>
-<%- include ('../nav.ejs') %>
+<%- include ('../nav.ejs', {active: "students"}) %>
+<h1 class="text-3xl font-bold text-slate-500 italic pt-4"><%= title %></h1>
 <div class="grid grid-cols-4 gap-4 pt-4">
     <a href="/cms/students/upload" class="card bg-green-600 text-primary-content">
         <div class="btn bg-green-600 card-body items-center text-center justify-center">
@@ -24,17 +25,6 @@
         <% }); %>
     <% } %>
 </div>
-<style>
-    #upload-link {
-        display: block;
-        background-color: #4CAF50;
-        color: white;
-        text-align: center;
-        padding: 32px;
-        text-decoration: none;
-        border-radius: 12px;
-    }
-</style>
 
 <script>
     const {Client, Account, ID} = Appwrite;

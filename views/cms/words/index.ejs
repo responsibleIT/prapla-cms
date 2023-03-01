@@ -1,42 +1,36 @@
 <%- include ('../../header.ejs') %>
-    <%- include ('../nav.ejs') %>
-        <div id="words-container">
-            <a id="upload-word-link" href="/cms/words/upload">Create a new word</a>
-            <% if(typeof (words) != "undefined") { %>
-                <ul>
-                    <% words.forEach(word => { %>
-                        <li>
-                            <a class="square-link" href="words/<%= word.id %>">
-                                <%= word.word %>
+<%- include ('../nav.ejs', {active: "words"}) %>
+<h1 class="text-3xl font-bold text-slate-500 italic pt-4"><%= title %></h1>
+<div class="grid grid-cols-4 gap-4 pt-4">
+    <a href="/cms/words/upload" class="card bg-green-600 text-primary-content">
+        <div class="btn bg-green-600 card-body items-center text-center justify-center">
+            <span class="text-5xl text-bold align-middle pb-2">+</span>
+        </div>
+    </a>
+    <% if(typeof (words) != "undefined") { %>
+        <% words.forEach(word => { %>
+            <div class="card lg:card-side card-compact bg-base-100 shadow-l">
+                    <div class="card-body justify-start">
+                        <h2 class="card-title"><%= word.word %> </h2>
+                        <p class="italic"><%= word.subscribedWordList%></p>
+                        <figure><img class="h-32 w-32" loading="lazy" src="<%= word.image + "&" + Date.now()%>" alt="<%=word.word%>" /></figure>
+                        <div class="card-actions justify-start">
+                            <a class="btn bg-blue-600" href="words/<%= word.id %>">
+                                Bewerken
                             </a>
-                        </li>
-                    <% }); %>
-                </ul>
-            <% } %>
-    </div>
-    <style>
-        #content-row > div {
-            flex: 1;
-            padding-right: 32px;
-        }
+                        </div>
+                    </div>
+            </div>
+        <% }); %>
+    <% } %>
+</div>
 
-        #upload-word-link {
-            display: block;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 32px;
-            text-decoration: none;
-            border-radius: 12px;
-        }
-    </style>
+<script>
+    const {Client, Account, ID} = Appwrite;
+    const client = new Client()
+        .setEndpoint("https://aw.responsible-it.nl/v1")
+        .setProject("63a32dec14be845ec0f9")
 
-    <script>
-        const {Client, Account, ID} = Appwrite;
-        const client = new Client()
-            .setEndpoint("https://aw.responsible-it.nl/v1")
-            .setProject("63a32dec14be845ec0f9")
-
-    </script>
+</script>
 </div>
 <%- include ('../../footer.ejs') %>
