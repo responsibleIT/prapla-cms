@@ -51,6 +51,7 @@ app.use('/cms', cmsRouter);
 app.use('/cms/words', wordsRouter);
 app.use('/cms/lists', listsRouter);
 app.use('/cms/students', studentsRouter);
+app.use('/cms/users', usersRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler

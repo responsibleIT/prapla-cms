@@ -2,6 +2,7 @@ const {database, storage, storage_bucket_id, database_id, word_collection_id} = 
 const uuid = require("uuid");
 const {InputFile} = require("node-appwrite");
 const {Readable} = require("stream");
+const listRepo = require("./list-repository");
 
 exports.getWord = (word_id) => {
     return new Promise((resolve, reject) => {
@@ -18,10 +19,27 @@ exports.getWord = (word_id) => {
 exports.getWords = () => {
     return new Promise((resolve) => {
         database.listDocuments(database_id, word_collection_id)
-            .then((response) => {
+            .then(async (response) => {
                 let words = response.documents.map(object => {
-                    return {word: object.word, id: object["$id"], subscribedWordList: object.wordlist, image: object.image}
+                    return {
+                        word: object.word,
+                        id: object["$id"],
+                        subscribedWordList: object.wordlist,
+                        categories: [],
+                        image: object.image
+                    }
                 });
+
+                // TODO fix performance
+                // for (const word of words) {
+                //     const allLists = await listRepo.getLists();
+                //     word.categories = allLists.map(list => {
+                //         if (word.subscribedWordList.includes(list.id)) {
+                //             return list.category;
+                //         }
+                //     }).filter(Boolean);
+                // }
+
                 resolve(words);
             })
             .catch(() => {

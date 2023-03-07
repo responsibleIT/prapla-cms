@@ -1,7 +1,7 @@
 const wordRepo = require('../data/word-repository');
 const listRepo = require('../data/list-repository');
 const studentRepo = require('../data/student-repository');
-const spellCreator = require('../service/spell-creator');
+const userRepo = require('../data/user-repository');
 
 exports.getDashboardView = async (req, res) => {
     res.render('cms/dashboard/index', {title: 'Dashboard'});
@@ -20,4 +20,9 @@ exports.getListsView = async (req, res) => {
 exports.getStudentsView = async (req, res) => {
     let students = await studentRepo.getStudents();
     res.render('cms/students/index', {title: 'Kinderen', students: students});
+}
+
+exports.getUsersView = async (req, res) => {
+    let users = await userRepo.getUsers();
+    res.render('cms/users/index', {title: 'Gebruikers', users: users});
 }

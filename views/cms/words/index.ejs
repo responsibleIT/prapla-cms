@@ -12,7 +12,7 @@
             <div class="card lg:card-side card-compact bg-base-100 shadow-l">
                     <div class="card-body justify-start">
                         <h2 class="card-title"><%= word.word %> </h2>
-                        <p class="italic"><%= word.subscribedWordList%></p>
+                        <p class="italic"><%= word.categories%></p>
                         <figure><img class="h-32 w-32" loading="lazy" src="<%= word.image + "&" + Date.now()%>" alt="<%=word.word%>" /></figure>
                         <div class="card-actions justify-start">
                             <a class="btn bg-blue-600" href="words/<%= word.id %>">

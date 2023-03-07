@@ -1,5 +1,4 @@
 const {database, database_id, list_collection_id} = require("../service/appwrite");
-const spellRepo = require("./spell-repository");
 const uuid = require("uuid");
 
 exports.getList = (list_id) => {

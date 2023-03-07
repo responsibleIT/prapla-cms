@@ -1,81 +1,78 @@
 <%- include ('../header.ejs') %>
-<div id="login-container">
-    <form id="login-form" method="post">
-        <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+<div class="flex items-center justify-center h-screen bg-slate-100">
+    <form class="card bg-base-100 shadow-xl w-96" id="login-form" method="post">
+        <div class="card-body">
+            <h2 class="card-title text-center">Prapla</h2>
+            <label class="label">
+                <span class="label-text">E-mail</span>
+            </label>
+            <input class="input input-bordered w-full max-w-ws" type="text" placeholder="Uw mailadres" name="email"
+                   required>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+            <label class="label">
+                <span class="label-text">Wachtwoord</span>
+            </label>
+            <input class="input input-bordered w-full max-w-ws" type="password" placeholder="Uw wachtwoord" name="psw"
+                   required>
 
-        <button type="submit">Login</button>
+            <a class="text-blue-600 text-xs">Wachtwoord vergeten?</a>
+
+            <div class="card-actions justify-start items-center">
+                <button class="btn bg-blue-600 " type="submit">Login</button>
+                <p id="error-msg" class="text-red-500 text-xs"></p>
+            </div>
+        </div>
     </form>
-
-    <style>
-        #login-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-width: 40vw;
-        }
-    </style>
-
-    <script>
-        const {Client, Account, ID} = Appwrite;
-        const client = new Client()
-            .setEndpoint("https://aw.responsible-it.nl/v1")
-            .setProject("63a32dec14be845ec0f9")
-
-        const loginForm = document.getElementById("login-form");
-        loginForm.addEventListener("submit", handleSubmit);
-
-        function handleSubmit(e) {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const props = Object.fromEntries(formData);
-
-            const account = new Account(client);
-            const login = new Promise((resolve, reject) => {
-                account.createEmailSession(
-                    props.email,
-                    props.psw
-                ).then(function (response) {
-                    resolve(response);
-                }, function (error) {
-                    reject(error);
-                });
-            });
-
-            login.then((res) => {
-                if (res) {
-                    fetch(window.location.href, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        credentials: "same-origin",
-                        body: JSON.stringify({
-                            "session_id": res["$id"],
-                            "user_id": res["userId"]
-                        })
-                    }).then(function (response) {
-                        if (response.redirected) {
-                            location.href = response.url
-                        }
-                    });
-                }
-            }).catch((error) => {
-                //TODO error handling login fail
-            });
-
-        }
-    </script>
 </div>
 
+<script>
+    const {Client, Account, ID} = Appwrite;
+    const client = new Client()
+        .setEndpoint("https://aw.responsible-it.nl/v1")
+        .setProject("63a32dec14be845ec0f9")
+
+    const loginForm = document.getElementById("login-form");
+    loginForm.addEventListener("submit", handleSubmit);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const props = Object.fromEntries(formData);
+
+        const account = new Account(client);
+        const login = new Promise((resolve, reject) => {
+            account.createEmailSession(
+                props.email,
+                props.psw
+            ).then(function (response) {
+                resolve(response);
+            }, function (error) {
+                reject(error);
+            });
+        });
+
+        login.then((res) => {
+            if (res) {
+                fetch(window.location.href, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({
+                        "session_id": res["$id"],
+                        "user_id": res["userId"]
+                    })
+                }).then(function (response) {
+                    if (response.redirected) {
+                        location.href = response.url
+                    }
+                });
+            }
+        }).catch((error) => {
+            document.getElementById("error-msg").innerHTML = "Verkeerde inloggegevens!";
+        });
+
+    }
+</script>
 <%- include ('../footer.ejs') %>

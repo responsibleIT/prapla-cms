@@ -18,5 +18,8 @@ router.get('/students', async (req, res, next) => {
     await cmsController.getStudentsView(req, res, next);
 });
 
+router.get('/users', async (req, res, next) => {
+    await cmsController.getUsersView(req, res, next);
+});
 
 module.exports = router;
