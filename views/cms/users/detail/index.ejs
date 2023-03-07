@@ -1,0 +1,80 @@
+<%- include ('../../../header.ejs') %>
+<%- include ('../../nav.ejs', {active: "users"}) %>
+<form class="card rounded-none bg-base-100 h-screen w-4/12 p-8 space-y-4" method="post" enctype="multipart/form-data"
+      onsubmit="return confirm('Are you sure you want to submit?');">
+    <h1 class="text-3xl font-bold text-slate-500 italic"><%= title %></h1>
+
+    <div class="form-control w-full max-w-xs">
+        <label for="name" class=" label">
+            <span class="label-text font-bold">Voor- en achternaam</span>
+        </label>
+        <input required class="input bg-gray-200 border-2 border-gray-300 w-full max-w-xs" type="text" id="name"
+               name="name"
+               value=<%= editable ? user.name : null %>></textarea>
+    </div>
+
+    <div class="form-control w-full max-w-xs">
+        <label class="label" for="email">
+            <span class="label-text font-bold">E-mailadres</span>
+        </label>
+        <input required class="input bg-gray-200 border-2 border-gray-300 w-full max-w-xs" type="email" id="email"
+               name="email"
+               value=<%= editable ? user.email : null %>></textarea>
+    </div>
+
+    <div class="form-control w-full max-w-xs">
+        <label class="label" for="password">
+            <span class="label-text font-bold">Wachtwoord</span>
+        </label>
+        <input required class="input bg-gray-200 border-2 border-gray-300 w-full max-w-xs" type="password" id="password"
+               name="password" value="<%= editable ? user.password : null %>" onfocus="this.value=''" ></textarea>
+    </div>
+
+
+    <fieldset>
+        <label class="label" for="role">
+            <span class="label-text font-bold">Rol</span>
+        </label>
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text">Beheerder</span>
+                <input type="radio" name="role" class="radio" <%= typeof(user) != "undefined" && user.role === "Beheerder" ? 'checked' : '' %> value="Beheerder">
+            </label>
+        </div>
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text">Docent</span>
+                <input type="radio" name="role" class="radio" <%= typeof(user) != "undefined" && user.role === "Docent" ? 'checked' : '' %> value="Docent">
+
+            </label>
+        </div>
+
+        <div class="form-control">
+            <label class="label cursor-pointer">
+                <span class="label-text">Kijker</span>
+                <input type="radio" name="role" class="radio" <%= typeof(user) != "undefined" && user.role === "Kijker" ? 'checked' : '' %> value="Kijker">
+
+            </label>
+        </div>
+    </fieldset>
+
+    <div class="pt-8">
+        <input class="btn bg-green-600 px-8" type="submit" value="<%= editable ? "Update" : "Upload" %>">
+        <a class="btn bg-orange-400 px-8" href="/cms/users">Annuleren</a>
+
+        <% if (editable === true) { %>
+            <input class="btn bg-red-600 px-8" id="delete" type="submit" name="delete" value="delete">
+        <% } %>
+    </div>
+
+</form>
+</div>
+
+<script>
+    const {Client, Account, ID} = Appwrite;
+    const client = new Client()
+        .setEndpoint("https://aw.responsible-it.nl/v1")
+        .setProject("63a32dec14be845ec0f9")
+
+</script>
+<%- include ('../../../footer.ejs') %>

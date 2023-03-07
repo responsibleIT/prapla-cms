@@ -1,0 +1,43 @@
+<%- include ('../../header.ejs') %>
+<%- include ('../nav.ejs', {active: "users"}) %>
+<h1 class="text-3xl font-bold text-slate-500 italic pt-4"><%= title %></h1>
+<div class="overflow-x-auto pt-4">
+    <table class="table table-normal w-full">
+        <thead class="font-thin text-slate-500">
+        <tr>
+            <th>Naam</th>
+            <th>Mailadres</th>
+            <th>Rol</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if(typeof (users) != "undefined") { %>
+            <% users.forEach(user => { %>
+                <tr>
+                    <td class="font-bold"><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.role %></td>
+                    <th class="justify-end">
+                        <a class="btn bg-blue-600 btn-xs" href="users/<%= user.id %>">Bewerken</a>
+                    </th>
+                </tr>
+            <% }); %>
+        <% } %>
+    </table>
+    <a href="/cms/users/upload" class="card bg-green-600 text-primary-content">
+        <div class="btn bg-green-600 card-body items-center text-center justify-center btn-s">
+            <span class="text-5xl text-bold align-middle pb-2">+</span>
+        </div>
+    </a>
+</div>
+
+<script>
+    const {Client, Account, ID} = Appwrite;
+    const client = new Client()
+        .setEndpoint("https://aw.responsible-it.nl/v1")
+        .setProject("63a32dec14be845ec0f9")
+
+</script>
+</div>
+<%- include ('../../footer.ejs') %>
