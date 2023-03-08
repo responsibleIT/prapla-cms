@@ -1,5 +1,5 @@
 const spellRepo = require('../data/spell-repository');
-const allCombinations = require('./spells.json');
+const allCombinations = require('./spellsv2.json');
 
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
