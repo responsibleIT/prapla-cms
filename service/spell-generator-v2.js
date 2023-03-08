@@ -20,7 +20,7 @@ function generateSecretSpell() {
 const cartesian =
     (...a) => a.reduce((a, b) => a.flatMap(d => b.map(e => [d, e].flat())));
 
-let spells = (cartesian(amount, adjectives, nature, ["die"], foods, verbs));
+let spells = (cartesian(adjectives, nature, ["die"], foods, verbs));
 let newSpells = [];
 spells.forEach(spell => {
     newSpells.push(spell.join(" "));
