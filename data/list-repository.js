@@ -1,5 +1,6 @@
 const {database, database_id, list_collection_id} = require("../service/appwrite");
 const uuid = require("uuid");
+const wordRepo = require("./word-repository");
 
 exports.getList = (list_id) => {
     return new Promise((resolve, reject) => {
@@ -16,7 +17,7 @@ exports.getList = (list_id) => {
 exports.getLists = () => {
     return new Promise((resolve) => {
         database.listDocuments(database_id, list_collection_id)
-            .then((response) => {
+            .then(async (response) => {
                 let lists = response.documents.map(object => {
                     return {category: object.category, id: object["$id"]}
                 });

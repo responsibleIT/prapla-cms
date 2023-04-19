@@ -3,7 +3,7 @@ const router = express.Router();
 const cmsController = require('../controllers/cms-controller');
 
 router.get('/', async (req, res, next) => {
-    cmsController.getDashboardView(req, res, next);
+    await cmsController.getDashboardView(req, res, next);
 });
 
 router.get('/words', async (req, res, next) => {

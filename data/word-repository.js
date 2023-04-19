@@ -1,6 +1,6 @@
 const {database, storage, storage_bucket_id, database_id, word_collection_id} = require("../service/appwrite");
 const uuid = require("uuid");
-const {InputFile} = require("node-appwrite");
+const {InputFile, Query} = require("node-appwrite");
 const {Readable} = require("stream");
 const listRepo = require("./list-repository");
 
@@ -16,35 +16,33 @@ exports.getWord = (word_id) => {
     });
 }
 
-exports.getWords = () => {
-    return new Promise((resolve) => {
-        database.listDocuments(database_id, word_collection_id)
-            .then(async (response) => {
-                let words = response.documents.map(object => {
-                    return {
-                        word: object.word,
-                        id: object["$id"],
-                        subscribedWordList: object.wordlist,
-                        categories: [],
-                        image: object.image
-                    }
-                });
+exports.getWords = async () => {
+    let documents = [];
+    let page = await database.listDocuments(database_id, word_collection_id, [Query.limit(100)]);
+    while (page.documents.length > 0) {
+        documents.push(...page.documents);
+        page = await database.listDocuments(database_id, word_collection_id, [Query.limit(100), Query.offset(documents.length)]);
+    }
 
-                // TODO fix performance
-                // for (const word of words) {
-                //     const allLists = await listRepo.getLists();
-                //     word.categories = allLists.map(list => {
-                //         if (word.subscribedWordList.includes(list.id)) {
-                //             return list.category;
-                //         }
-                //     }).filter(Boolean);
-                // }
+    return new Promise(async (resolve) => {
+        let lists = await listRepo.getLists();
+        let words = documents.map(object => {
+            let categories = lists.map(list => {
+                if (object.wordlist.includes(list.id)) {
+                    return list.category;
+                }
+            }).filter(Boolean);
 
-                resolve(words);
-            })
-            .catch(() => {
-                resolve([]);
-            });
+            return {
+                word: object.word,
+                id: object["$id"],
+                subscribedWordList: object.wordlist,
+                categories: categories,
+                image: object.image
+            }
+        });
+
+        resolve(words);
     });
 }
 

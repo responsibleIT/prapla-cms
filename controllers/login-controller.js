@@ -10,7 +10,8 @@ exports.logout = (req, res, next) => {
     res.redirect('/');
 }
 
-exports.validateLogin = (req, res, next) => {
+exports.validateLogin = async (req, res, next) => {
+
     let session_id = req.body["session_id"];
     let user_id = req.body["user_id"];
     if (session_id && user_id) {

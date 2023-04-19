@@ -9,4 +9,4 @@ exports.generate = async () =>{
     let spells = await spellRepo.getSpells();
     let diff = allCombinations.diff(spells);
     return diff[Math.floor(Math.random() * diff.length)];
-}
+}   
