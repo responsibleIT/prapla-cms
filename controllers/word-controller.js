@@ -31,9 +31,7 @@ function sanitizeWordList(req) {
     if (Array.isArray(req.body.wordlist)) {
         return req.body.wordlist.map(string => string.replace("/", ""));
     } else if (req.body.wordlist) {
-        return [req.body.wordlist.slice(0, -1)];
-    } else {
-        return [];
+        return [req.body.wordlist];
     }
 }
 
