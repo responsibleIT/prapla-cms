@@ -14,11 +14,16 @@ exports.handleCreate = async (req, res) => {
 
 exports.handleUpdate = async (req, res) => {
     const category = req.body.category;
+    const words = req.body.words;
 
     if (req.body.delete) {
         await listRepository.deleteList(req.params.listId);
     } else {
-        await listRepository.updateList(req.params.listId, category);
+        if (words) {
+            await listRepository.updateList(req.params.listId, category, words);
+        } else {
+            await listRepository.updateList(req.params.listId, category);
+        }
     }
 
     res.redirect('/cms/lists');

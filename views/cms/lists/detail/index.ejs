@@ -21,23 +21,22 @@
                     <div>
                         <label class="label cursor-pointer" for=<%= word.word %>>
                             <span class="label-text"><%= word.word %></span>
-                            <!--TODO: fix word checkbox two way state, disabled for now-->
                             <% if(word.subscribedWordList) { %>
                                 <% if (word.subscribedWordList.some(e => e === listId)) { %>
                                     <input class="checkbox"
                                            data-id="<%= word.id %>" type="checkbox"
                                            id="<%= word.word %>" name="words"
-                                           value="<%= word.id %>" checked disabled/>
+                                           value="<%= word.id %>" checked/>
                                 <% } else { %>
                                     <input class="checkbox"
                                            data-id="<%= word.id %>" type="checkbox"
                                            id="<%= word.word %>" name="words"
-                                           value="<%= word.id %>" disabled/>
+                                           value="<%= word.id %>"/>
                                 <% } %>
                             <% } else { %>
                                 <input class="checkbox"
                                        data-id="<%= word.id %>" type="checkbox" id="<%= word.word %>" name="words"
-                                       value="<%= word.id %>" disabled/>
+                                       value="<%= word.id %>"/>
                             <% } %>
                         </label>
                     </div>
