@@ -69,19 +69,6 @@ exports.updateList = (list_id, category) => {
     });
 }
 
-exports.updateList = async (list_id, category, words) => {
-    let promises = [];
-    for (const wordId of words) {
-        let wordObject = await wordRepo.getWord(wordId);
-        let wordList = wordObject.wordlist;
-        wordList.push(list_id);
-
-        promises.push(wordRepo.updateWord(wordId, wordObject.word, null, wordList, true));
-    }
-
-    return Promise.all(promises)
-}
-
 exports.deleteList = (list_id) => {
     return deleteList(list_id);
 }

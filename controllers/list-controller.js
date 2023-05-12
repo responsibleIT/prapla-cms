@@ -20,7 +20,25 @@ exports.handleUpdate = async (req, res) => {
         await listRepository.deleteList(req.params.listId);
     } else {
         if (words) {
-            await listRepository.updateList(req.params.listId, category, words);
+            let listId = req.params.listId;
+            let allWords = await wordRepository.getWords();
+            for (word of allWords) {
+                if (word.subscribedWordList.includes(listId)) {
+                    let wordlist = word.subscribedWordList.filter(id => id !== listId);
+                    await wordRepository.updateWord(word.id, word.word, null, wordlist, true);
+                }
+            }
+
+            for (wordId of words) {
+                let wordObj = await wordRepository.getWord(wordId);
+
+                let wordlist = wordObj.wordlist;
+                wordlist.push(listId);
+
+                await wordRepository.updateWord(wordId, wordObj.word, null, wordlist, true);
+            }
+
+            await listRepository.updateList(req.params.listId, category);
         } else {
             await listRepository.updateList(req.params.listId, category);
         }
