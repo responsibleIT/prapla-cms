@@ -17,6 +17,7 @@ function createPartTwo(wordList) {
     try {
         let partTwo = [];
         let no_of_questions = Math.floor(Math.random() * 5) + 1;
+        let original_list = JSON.parse(JSON.stringify(wordList));
         for (let i = 0; i < no_of_questions; i++) {
             wordList.shift();
             let sample = getRandom(wordList, 4);
@@ -28,6 +29,7 @@ function createPartTwo(wordList) {
             sample[randomNr].correct = true;
 
             partTwo.push(sample);
+            wordList = JSON.parse(JSON.stringify(original_list));
         }
         return partTwo;
     } catch (error) {
