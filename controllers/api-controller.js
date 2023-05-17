@@ -3,7 +3,9 @@ const apiRepo = require('../data/api-repository');
 exports.getWordList = async (req, res) => {
     try {
         const wordList = await apiRepo.getWholeListBySpell(req.query.spell);
-        const obj = [wordList, createPartTwo(wordList)];
+        const words = JSON.parse(JSON.stringify(wordList));
+        const student = words.shift();
+        const obj = [student, words, createPartTwo(wordList)];
 
         res.status(200).json(obj);
     } catch (error) {
@@ -12,34 +14,35 @@ exports.getWordList = async (req, res) => {
 };
 
 function createPartTwo(wordList) {
-    let partTwo = [];
-    let no_of_questions = Math.floor(Math.random() * 5) + 1;
-    for (let i = 0; i < no_of_questions; i++) {
-        let sample = getRandom(wordList, 4);
-        sample.map((word) => {
-            word.correct = false;
-        });
+    try {
+        let partTwo = [];
+        let no_of_questions = Math.floor(Math.random() * 5) + 1;
+        for (let i = 0; i < no_of_questions; i++) {
+            wordList.shift();
+            let sample = getRandom(wordList, 4);
+            sample.map((word) => {
+                word.correct = false;
+            });
 
-        let randomNr = Math.floor(Math.random() * sample.length);
-        sample[randomNr].correct = true;
+            let randomNr = Math.floor(Math.random() * sample.length);
+            sample[randomNr].correct = true;
 
-        partTwo.push(sample);
+            partTwo.push(sample);
+        }
+        return partTwo;
+    } catch (error) {
+        console.log(error);
     }
-    return partTwo;
 }
 
-function getRandom(arr, n) {
-    arr.shift();
-
-    var result = new Array(n),
-        len = arr.length,
-        taken = new Array(len);
-    if (n > len)
-        throw new RangeError("getRandom: more elements taken than available");
-    while (n--) {
-        var x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
+// Fisher-Yates shuffle!
+function getRandom(arr, size) {
+    let shuffled = arr.slice(0), i = arr.length, temp, index;
+    while (i--) {
+        index = Math.floor((i + 1) * Math.random());
+        temp = shuffled[index];
+        shuffled[index] = shuffled[i];
+        shuffled[i] = temp;
     }
-    return result;
+    return shuffled.slice(0, size);
 }
