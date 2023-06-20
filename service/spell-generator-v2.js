@@ -1,7 +1,7 @@
 const foods = ["bananen", "appels", "peren", "sinaasappels", "taarten", "aardbeien", "kersen", "koekjes", "broodjes"];
-const adjectives = ["groene", "gele", "rode", "blauwe", "paarse", "oranje", "roze", "zwarte", "witte", "bruine", "grijze", "lange", "dunne", "dikke", "grote", "sterke", "slimme", "grappige", "leuke"];
-const nature = ["koeien", "katten", "honden", "kippen", "vissen", "bomen", "jongens", "meisjes", "oren", "neuzen", "vliegen", "spinnen", "mugggen",
-    "mieren", "vlinders", "koeien", "geiten", "bokken", "schapen", "paarden"];
+const adjectives = ["groene", "gele", "rode", "blauwe", "paarse", "oranje", "roze", "gouden", "grijze", "lange", "dunne", "dikke", "grote", "sterke", "slimme", "grappige", "leuke"];
+const nature = ["koeien", "katten", "honden", "kippen", "vissen", "bomen", "schoenen", "sokken", "flessen", "vorken", "lepels", "bloemen", "planten", "oren", "neuzen", "vliegen", "spinnen", "muggen",
+    "mieren", "vlinders", "geiten", "bokken", "schapen", "paarden"];
 const amount = ["twee", "drie", "vier", "vijf", "zes", "zeven", "acht", "negen", "tien", "elf", "twaalf"];
 const verbs = ["eten", "kopen", "pakken", "lenen", "knijpen", "koken"];
 
